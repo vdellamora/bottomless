@@ -14,6 +14,7 @@ public:
 	explicit Sprite(GameObject&);
 	explicit Sprite(GameObject&, std::string, int = 1, float = 1, float = 0);
 	~Sprite();
+	void NewSprite(std::string, int = 1, float = 1, float = 0);
 	void Open(std::string);
 	void SetFrame(int);
 	void SetFrameCount(int);
@@ -25,6 +26,8 @@ public:
 	void Render(float, float);
 	int GetWidth();
 	int GetHeight();
+	bool GetFlip();
+	void SetFlip(bool);
 	Vec2 GetScale();
 	bool Is(std::string);
 	bool IsOpen();
@@ -37,6 +40,7 @@ private:
 	float frameTime;
 	int width;
 	int height;
+	bool flip;
 	Vec2 scale;
 	Timer selfDestructCount;
 	float secondsToSelfDestruct;

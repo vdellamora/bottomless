@@ -8,7 +8,7 @@ Game* Game::instance = nullptr;
 
 Game& Game::GetInstance(){
 	if(instance != nullptr) return *instance;
-	instance = new Game("Vitor Moraes Dellamora 16/0056802", 1024, 600);
+	instance = new Game("Bottomless", 1280, 720);
 	return *instance;
 }
 
@@ -28,11 +28,11 @@ Game::Game(std::string title, int width, int height){
 		//SDL_GetError
 	}
 
-	if(IMG_Init(IMG_INIT_JPG)==0){
+	if(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)==0){
 		// Tratar erro
 	}
 
-	if(Mix_Init(MIX_INIT_OGG)==0){
+	if(Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3)==0){
 		// Tratar erro
 	}
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, 

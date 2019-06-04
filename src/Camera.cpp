@@ -19,18 +19,18 @@ void Camera::Update(float dt){
 
 		InputManager im = InputManager::GetInstance();
 
-		if(im.IsKeyDown(UP_ARROW_KEY)){
-			pos.y -= speed.y;
-		}
-		if(im.IsKeyDown(DOWN_ARROW_KEY)){
-			pos.y += speed.y;
-		}
-		if(im.IsKeyDown(LEFT_ARROW_KEY)){
-			pos.x -= speed.x;
-		}
-		if(im.IsKeyDown(RIGHT_ARROW_KEY)){
-			pos.x += speed.x;
-		}
+		// if(im.IsKeyDown(UP_ARROW_KEY)){
+		// 	pos.y -= speed.y;
+		// }
+		// if(im.IsKeyDown(DOWN_ARROW_KEY)){
+		// 	pos.y += speed.y;
+		// }
+		// if(im.IsKeyDown(LEFT_ARROW_KEY)){
+		// 	pos.x -= speed.x;
+		// }
+		// if(im.IsKeyDown(RIGHT_ARROW_KEY)){
+		// 	pos.x += speed.x;
+		// }
 	}
 }
 

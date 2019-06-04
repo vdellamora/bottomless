@@ -34,5 +34,6 @@
 
 #define TRACE(msg)          if(D_TRACE) std::cout << msg << std::endl;
 #define TRACEN(msg)         if(D_TRACE) std::cout << msg;
+#define TST(value)          std::to_string(value)
 
 #define M_PI                3.14159265358979323846

@@ -10,7 +10,10 @@ Sprite::Sprite(GameObject& go) : Component(go) {
 }
 Sprite::Sprite(GameObject& go, std::string file, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(go){
 	// TRACE("Sprite::Sprite");
-	// if(file == "assets/img/alien.png") TRACE("Sprite Alien");
+	NewSprite(file, frameCount, frameTime, secondsToSelfDestruct);
+}
+void Sprite::NewSprite(std::string file, int frameCount, float frameTime, float secondsToSelfDestruct){
+	flip = false;
 	this->frameCount = frameCount;
 	this->frameTime = frameTime;
 	this->secondsToSelfDestruct = secondsToSelfDestruct;
@@ -63,9 +66,10 @@ void Sprite::Render(float x, float y){
 	r.x = x - Camera::pos.x; r.y = y - Camera::pos.y;
 	// r.x -= r.x - auxX;
 	// r.y -= r.y - auxY;
+	SDL_RendererFlip flippo = (flip?SDL_FLIP_HORIZONTAL:SDL_FLIP_NONE);
 	SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), 
 		texture.get(), &clipRect, &r,
-		angleDeg, nullptr, SDL_FLIP_NONE);
+		angleDeg, nullptr, flippo);
 }
 void Sprite::SetScaleX(float scaleX, float scaleY){
 	if(scaleX != 0) scale.x = scaleX;
@@ -74,6 +78,8 @@ void Sprite::SetScaleX(float scaleX, float scaleY){
 void Sprite::SetFrameTime(float frameTime){ this->frameTime = frameTime; }
 int Sprite::GetWidth(){ return (width*scale.x)/frameCount; }
 int Sprite::GetHeight(){ return height*scale.y; }
+bool Sprite::GetFlip(){ return flip;}
+void Sprite::SetFlip(bool flip){this->flip = flip;}
 Vec2 Sprite::GetScale(){ return scale; }
 bool Sprite::IsOpen(){ return (texture != nullptr); }
 bool Sprite::Is(std::string type){ return type=="Sprite"; }
