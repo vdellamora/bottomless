@@ -21,10 +21,12 @@ public:
 	void Resume();
 
 	GameObject& GetCollisionMap();
+	GameObject& GetEventMap();
 private:
 	GameObject* bg;
 	GameObject* tm;
 	GameObject* cm;
+	GameObject* em;
 	GameObject* cecilia;
 	Music music;
 

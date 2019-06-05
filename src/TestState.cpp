@@ -7,6 +7,8 @@
 #include "../include/TileSet.h"
 #include "../include/TileMap.h"
 #include "../include/CollisionMap.h"
+#include "../include/EventMap.h"
+#include "../include/Event.h"
 #include "../include/Sprite.h"
 #include "../include/Camera.h"
 #include "../include/CameraFollower.h"
@@ -32,10 +34,17 @@ TestState::TestState() : State(){
 	objectArray.emplace_back(tm);
 
 	cm = new GameObject();
-	cm->box.x = 0;	cm->box.y = 0;
-	cm->AddComponent(new CollisionMap(*cm, 
-		"assets/map/tileMap_col.txt"));
+	CollisionMap* cmap = new CollisionMap(*cm, 
+		"assets/map/tileMap_col.txt");
+	cm->AddComponent(cmap);
 	objectArray.emplace_back(cm);
+
+	em = new GameObject();
+	EventMap* emap = new EventMap(*em, 
+		cmap->GetWidth(), cmap->GetHeight());
+	em->AddComponent(emap);
+	emap->AddEvent(5,5,1,true); emap->AddEvent(6,5,1,true);
+	objectArray.emplace_back(em);
 
 	cecilia = new GameObject();
 	Cecilia* comp_c = new Cecilia(*cecilia);
@@ -108,6 +117,7 @@ void TestState::Render(){
 	// topo->Render(1);
 }
 GameObject& TestState::GetCollisionMap(){return *cm;}
+GameObject& TestState::GetEventMap(){return *em;}
 TestState::~TestState(){objectArray.clear();}
 void TestState::Pause(){}
 void TestState::Resume(){}

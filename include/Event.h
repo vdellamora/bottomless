@@ -1,5 +1,5 @@
-#ifndef C_CECILIA
-#define C_CECILIA
+#ifndef C_EVENT
+#define C_EVENT
 
 #include "inclusao.h"
 #include "GameObject.h"
@@ -8,41 +8,40 @@
 #include <iostream>
 #include <memory>
 
-#define CECILIA_MOVE_SPEED 4
-#define CECILIA_IDLE_SPEED 0.2f
-#define CECILIA_ANIMATION_SPEED 0.0908f
-
 class GameObject;
-class Cecilia : public Component{
+class Event : public Component{
 
 public:
-	Cecilia(GameObject&);
-	~Cecilia();
+	Event(GameObject&);
+	Event(GameObject&, int, bool);
+	Event(GameObject&, int, bool, std::string);
+	~Event();
 	void Start();
 	void Update(float);
 	void Render();
 	bool Is(std::string);
 
-	static Cecilia* player;
+	void Execute();
 	void NotifyCollision(GameObject&);
 	void SetGrid(int, int);
-	void VaiInteragir(int, int);
-	bool VaiColidir(int, int);
-	// void Walk(int);
+	Vec2 GetGrid();
+	bool GetSolido();
+	int GetType();
+
+	bool vazio;
 
 private:
+	enum EventType {PRESS, TOUCH};
+	EventType type;
 	Sprite* spr;
 	Vec2 speed;
 	Vec2 grid;
-	int nx;
-	int ny;
-	int hp;
 	int direcao;
+
 	int caminho;
 	bool andando;
 	bool parou;
-
-	float dbg_tempoWalk;
+	bool solido;
 };
 
-#endif //C_CECILIA
+#endif //C_EVENT

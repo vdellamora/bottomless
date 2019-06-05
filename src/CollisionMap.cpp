@@ -41,7 +41,10 @@ void CollisionMap::Load(std::string file){
 	}
 }
 int& CollisionMap::At(int x, int y, int z){
-	return collisionMatrix[z*mapWidth*mapHeight + y*mapWidth + x]; 
+	int conta = z*mapWidth*mapHeight + y*mapWidth + x;
+	int falho = 1;
+	if(conta>collisionMatrix.size()) return falho;
+	return collisionMatrix[conta]; 
 	//return &collisionMatrix[x][y][z];
 }
 
