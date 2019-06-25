@@ -115,6 +115,9 @@ void Event::Move(int direcao, int velocidade){
 		// spr->SetFlip(false);
 	}
 }
+void Event::Ouvir(int som){
+
+}
 bool Event::VaiColidir(int x, int y){
 	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
 	CollisionMap* cm = (CollisionMap*) tstate.GetCollisionMap().GetComponent("CollisionMap");

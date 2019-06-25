@@ -24,13 +24,14 @@ public:
 	void Update(float);
 	void Render();
 	bool Is(std::string);
+	void NotifyCollision(GameObject&);
 
 	void NewAction(Action*);
 	void Execute();
+	void Ouvir(int);
 
 	void Move(int, int);
 	bool VaiColidir(int, int);
-	void NotifyCollision(GameObject&);
 	void SetGrid(int, int);
 	Vec2 GetGrid();
 	bool GetSolido();

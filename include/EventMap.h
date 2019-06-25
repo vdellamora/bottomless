@@ -20,6 +20,7 @@ public:
 	Event* GetEvent(std::string);
 	void RemoveEvent(Event);
 
+	void OuvirEventos(int);
 
 	int GetWidth();
 	int GetHeight();

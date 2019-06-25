@@ -30,6 +30,7 @@ private:
 	GameObject* cm;
 	GameObject* em;
 	GameObject* cecilia;
+	GameObject* crab;
 	TileSet* ts;
 	Music music;
 

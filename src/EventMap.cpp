@@ -42,13 +42,11 @@ Event* EventMap::GetEvent(std::string identifier){
 void EventMap::RemoveEvent(Event e){
 	
 }
-
-int EventMap::GetWidth(){ return mapWidth;}
-int EventMap::GetHeight(){ return mapHeight;}
-void EventMap::SetWidth(int width){this->mapWidth = width;}
-void EventMap::SetHeight(int height){this->mapHeight = height;}
-
-bool EventMap::Is(std::string type){ return (type == "EventMap");}
+void EventMap::OuvirEventos(int som){
+	for(int i = 0; i<eventMatrix.size(); i++){
+		// if(eventMatrix[i]->GetType()==2) eventMatrix[i]->Execute(som);
+	}
+}
 void EventMap::Update(float dt){
 	for(int i = 0; i<eventMatrix.size(); i++){
 		eventMatrix[i]->Update(dt);
@@ -59,4 +57,11 @@ void EventMap::Render(){
 		eventMatrix[i]->Render();
 	}
 }
+
+
+int EventMap::GetWidth(){ return mapWidth;}
+int EventMap::GetHeight(){ return mapHeight;}
+void EventMap::SetWidth(int width){this->mapWidth = width;}
+void EventMap::SetHeight(int height){this->mapHeight = height;}
+bool EventMap::Is(std::string type){ return (type == "EventMap");}
 EventMap::~EventMap(){}

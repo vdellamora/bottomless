@@ -171,15 +171,23 @@ void Cecilia::SetGrid(int x, int y){
 }
 
 void Cecilia::TocarSom(){
+	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
+	// Usar o EventMap pra tocar todos os Ouvir() dos eventos
 	switch(audioSelecionado){
-		case 1:
-			TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
-			EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
-			// Usar o EventMap pra tocar todos os Ouvir() dos eventos
+		case 1:					// Caixa de música
+			Sound* som = new Sound(associated, "assets/audio/boom.wav");
+			associated.AddComponent(som);
+			em->OuvirEventos(audioSelecionado);
 			break;
 	}
 }
-
+void Cecilia::InfligirDano(int dano){
+	hp -= dano;
+	//piscar
+	//jogar pra trás
+	Move((direcao+2)%4+1);
+}
 
 void Cecilia::NotifyCollision(GameObject& other){}
 int Cecilia::GetDirection(){ return direcao; }

@@ -34,6 +34,7 @@ public:
 	// void Walk(int);
 
 	void TocarSom();
+	void InfligirDano(int);
 
 private:
 	Sprite* spr;
