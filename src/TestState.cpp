@@ -9,6 +9,7 @@
 #include "../include/CollisionMap.h"
 #include "../include/EventMap.h"
 #include "../include/Event.h"
+#include "../include/Move.h"
 #include "../include/Sprite.h"
 #include "../include/Camera.h"
 #include "../include/CameraFollower.h"
@@ -25,12 +26,13 @@ TestState::TestState() : State(){
 	bg->AddComponent(new CameraFollower(*bg));
 	objectArray.emplace_back(bg);
 
+	ts = new TileSet(64, 64, "assets/img/TileSubmarino.png");
 	tm = new GameObject();
 	tm->box.x = 0;
 	tm->box.y = 0;
 	tm->AddComponent(new TileMap(*tm, 
 		"assets/map/tileMap.txt", 
-		new TileSet(64, 64, "assets/img/TileSubmarino.png")));
+		ts));
 	objectArray.emplace_back(tm);
 
 	cm = new GameObject();
@@ -43,7 +45,9 @@ TestState::TestState() : State(){
 	EventMap* emap = new EventMap(*em, 
 		cmap->GetWidth(), cmap->GetHeight());
 	em->AddComponent(emap);
-	emap->AddEvent(5,5,1,true); emap->AddEvent(6,5,1,true);
+	emap->AddEvent("teste1",5,5,1,true); emap->AddEvent("teste2",6,5,1,true);
+	emap->AddEvent("testeMove",6,6,0,true,6);
+	emap->GetEvent("testeMove")->NewAction(new Move(*(emap->GetEvent("testeMove")), 0, 4));
 	objectArray.emplace_back(em);
 
 	cecilia = new GameObject();
@@ -116,6 +120,7 @@ void TestState::Render(){
 	// TileMap* topo = (TileMap *) tm->GetComponent("TileMap");
 	// topo->Render(1);
 }
+TileSet& TestState::GetTileSet(){return *ts;}
 GameObject& TestState::GetCollisionMap(){return *cm;}
 GameObject& TestState::GetEventMap(){return *em;}
 TestState::~TestState(){objectArray.clear();}

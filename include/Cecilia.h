@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Vec2.h"
 #include "Sprite.h"
+#include "Event.h"
 #include <iostream>
 #include <memory>
 
@@ -16,19 +17,23 @@ class GameObject;
 class Cecilia : public Component{
 
 public:
+	static Cecilia* player;
 	Cecilia(GameObject&);
 	~Cecilia();
 	void Start();
 	void Update(float);
 	void Render();
 	bool Is(std::string);
-
-	static Cecilia* player;
 	void NotifyCollision(GameObject&);
+
+	void Move(int);
 	void SetGrid(int, int);
-	void VaiInteragir(int, int);
 	bool VaiColidir(int, int);
+	void VaiInteragir(int, int);
+	int GetDirection();
 	// void Walk(int);
+
+	void TocarSom();
 
 private:
 	Sprite* spr;
@@ -36,12 +41,16 @@ private:
 	Vec2 grid;
 	int nx;
 	int ny;
-	int hp;
 	int direcao;
+	int direcaoAnterior;
 	int caminho;
 	bool andando;
 	bool parou;
 
+	int hp;
+	int audioSelecionado;
+
+	Event* eventoPraExecutar;
 	float dbg_tempoWalk;
 };
 

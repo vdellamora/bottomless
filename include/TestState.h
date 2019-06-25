@@ -5,6 +5,7 @@
 #include "State.h"
 #include "GameObject.h"
 #include "Music.h"
+#include "TileSet.h"
 #include <iostream>
 #include <memory>
 
@@ -20,6 +21,7 @@ public:
 	void Pause();
 	void Resume();
 
+	TileSet& GetTileSet();
 	GameObject& GetCollisionMap();
 	GameObject& GetEventMap();
 private:
@@ -28,6 +30,7 @@ private:
 	GameObject* cm;
 	GameObject* em;
 	GameObject* cecilia;
+	TileSet* ts;
 	Music music;
 
 };

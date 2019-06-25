@@ -6,25 +6,41 @@ EventMap::EventMap(GameObject& associated, int width, int height) : Component(as
 	this->mapWidth = width;
 	this->mapHeight = height;
 }
-Event EventMap::At(int x, int y){
+Event* EventMap::At(int x, int y){
 	//if(x>eventMatrix.size() || y>eventMatrix[x].size()) return 0;
 	//return eventMatrix[conta]; 
-	for(int i = 0; i<eventMatrix.size(); i++){
-		if((eventMatrix[i].GetGrid().x == x) && (eventMatrix[i].GetGrid().y == y)) return eventMatrix[i];
+	for(auto i = eventMatrix.begin(); i!=eventMatrix.end(); i++){
+		if(((*i)->GetGrid().x == x) && ((*i)->GetGrid().y == y)) return (*i);
 	}
-	return Event(associated);
+	return new Event(associated);
 }
-void EventMap::AddEvent(int x, int y, int type, bool solido){
+void EventMap::AddEvent(std::string identifier, int x, int y, int type, bool solido){
 	GameObject* ev = new GameObject();
-	Event e1 = Event(*ev, type, solido);
-	e1.SetGrid(x,y);
+	Event* e1 = new Event(*ev, identifier, type, solido);
+	e1->SetGrid(x,y);
 	// if(x>eventMatrix.size() || y>eventMatrix[x].size()){ TRACE("Deu ruim aqui, meu bom. Tentou botar evento onde num tem."); return; }
 	eventMatrix.push_back(e1);
 }
+void EventMap::AddEvent(std::string identifier, int x, int y, int type, bool solido, std::string sprite){
+	GameObject* ev = new GameObject();
+	Event* e1 = new Event(*ev, identifier, type, solido, sprite);
+	e1->SetGrid(x,y);
+	eventMatrix.push_back(e1);
+}
+void EventMap::AddEvent(std::string identifier, int x, int y, int type, bool solido, int tileN){
+	GameObject* ev = new GameObject();
+	Event* e1 = new Event(*ev, identifier, type, solido, tileN);
+	e1->SetGrid(x,y);
+	eventMatrix.push_back(e1);
+}
+
+Event* EventMap::GetEvent(std::string identifier){
+	for(int i = 0; i<eventMatrix.size(); i++){
+		if(eventMatrix[i]->GetIdentifier() == identifier){ return eventMatrix[i]; }
+	}
+}
 void EventMap::RemoveEvent(Event e){
-	// for(int i = 0; i<eventMatrix.size(); i++){
-	// 	if(eventMatrix[i] == e){ TRACE("Encontrei o evento pra remocao, e agora?"); return; }
-	// }
+	
 }
 
 int EventMap::GetWidth(){ return mapWidth;}
@@ -33,5 +49,14 @@ void EventMap::SetWidth(int width){this->mapWidth = width;}
 void EventMap::SetHeight(int height){this->mapHeight = height;}
 
 bool EventMap::Is(std::string type){ return (type == "EventMap");}
-void EventMap::Render(){}
+void EventMap::Update(float dt){
+	for(int i = 0; i<eventMatrix.size(); i++){
+		eventMatrix[i]->Update(dt);
+	}
+}
+void EventMap::Render(){
+	for(int i = 0; i<eventMatrix.size(); i++){
+		eventMatrix[i]->Render();
+	}
+}
 EventMap::~EventMap(){}

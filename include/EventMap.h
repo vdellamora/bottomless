@@ -13,8 +13,11 @@ public:
 	EventMap(GameObject&, int, int);
 	~EventMap();
 
-	Event At(int, int);
-	void AddEvent(int, int, int, bool);
+	void AddEvent(std::string, int, int, int, bool);				// Sem sprite
+	void AddEvent(std::string, int, int, int, bool, std::string);	// Sprite próprio
+	void AddEvent(std::string, int, int, int, bool, int);			// Sprite do tileset
+	Event* At(int, int);
+	Event* GetEvent(std::string);
 	void RemoveEvent(Event);
 
 
@@ -23,10 +26,11 @@ public:
 	void SetWidth(int);
 	void SetHeight(int);
 
+	void Update(float);
 	void Render();
 	bool Is(std::string);
 private:
-	std::vector<Event>eventMatrix;
+	std::vector<Event*> eventMatrix;
 	int mapWidth;
 	int mapHeight;
 };
