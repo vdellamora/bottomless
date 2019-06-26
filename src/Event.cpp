@@ -14,8 +14,9 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	andando = false;	parou = true;
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
+	somPedido = 0;
 	tileNumber = -1; this->identifier = identifier;
-	this->type = (type==1?PRESS:TOUCH);
+	this->type = type;
 	this->solido = solido;
 	associated.AddComponent(new Collider(associated));
 }
@@ -23,8 +24,9 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	andando = false;	parou = true;
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
+	somPedido = 0;
 	tileNumber = -1; this->identifier = identifier;
-	this->type = (type==1?PRESS:TOUCH);
+	this->type = type;
 	this->solido = solido;
 	spr = new Sprite(associated, file.c_str());
 	associated.AddComponent(spr);
@@ -34,8 +36,9 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	andando = false;	parou = true;
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
+	somPedido = 0;
 	tileNumber = -1; this->identifier = identifier;
-	this->type = (type==1?PRESS:TOUCH);
+	this->type = type;
 	this->solido = solido;
 	this->tileNumber = tileN;
 	// spr = new Sprite(associated, file.c_str());
@@ -49,9 +52,16 @@ void Event::Execute(){
 	for(auto i = listaAcoes.begin(); i != listaAcoes.end(); i++){
 		(*i)->Execute();
 	}
-	//MessageBox mb = MessageBox();
-	//mb.Show("Bondia, Cecília.");
 }
+void Event::Execute(int som){
+	TRACEN("som pedido: "); TRACE(std::to_string(somPedido));
+	if(som != somPedido) return;
+	for(auto i = listaAcoes.begin(); i != listaAcoes.end(); i++){
+		(*i)->Execute();
+	}
+}
+void Event::SetSomPedido(int som){somPedido = som;}
+int Event::GetSomPedido(){return somPedido;}
 
 void Event::SetGrid(int x, int y){
 	grid = Vec2(x,y);
@@ -61,10 +71,10 @@ void Event::SetGrid(int x, int y){
 
 Vec2 Event::GetGrid(){ return grid; }
 bool Event::GetSolido(){ return solido; }
-int Event::GetType(){ return (this->type==PRESS?1:0); }
+int Event::GetType(){ return this->type; }
 std::string Event::GetIdentifier(){ return identifier; }
 bool Event::Is(std::string type){ return type == "Event"; }
-Event::~Event(){}
+Event::~Event(){listaAcoes.clear();}
 void Event::Start(){}
 void Event::Update(float dt){
 	if(andando){
@@ -114,9 +124,6 @@ void Event::Move(int direcao, int velocidade){
 		// spr->NewSprite("assets/img/CeciliaIdle.png", 11, CECILIA_IDLE_SPEED);
 		// spr->SetFlip(false);
 	}
-}
-void Event::Ouvir(int som){
-
 }
 bool Event::VaiColidir(int x, int y){
 	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();

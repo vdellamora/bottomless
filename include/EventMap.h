@@ -18,7 +18,7 @@ public:
 	void AddEvent(std::string, int, int, int, bool, int);			// Sprite do tileset
 	Event* At(int, int);
 	Event* GetEvent(std::string);
-	void RemoveEvent(Event);
+	void RemoveEvent(std::string);
 
 	void OuvirEventos(int);
 

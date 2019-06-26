@@ -28,7 +28,7 @@ public:
 
 	void NewAction(Action*);
 	void Execute();
-	void Ouvir(int);
+	void Execute(int);
 
 	void Move(int, int);
 	bool VaiColidir(int, int);
@@ -36,15 +36,18 @@ public:
 	Vec2 GetGrid();
 	bool GetSolido();
 	int GetType();
+	void SetSomPedido(int);
+	int GetSomPedido();
 	std::string GetIdentifier();
 
 	bool vazio;
 
 private:
 	std::vector<Action*> listaAcoes;
+	enum EventType {PRESS, TOUCH, LISTEN};
+	int type;
+	int somPedido;
 
-	enum EventType {PRESS, TOUCH};
-	EventType type;
 	Vec2 grid;
 	Sprite* spr;
 	std::string identifier;

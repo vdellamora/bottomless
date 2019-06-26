@@ -66,6 +66,7 @@ void Cecilia::Update(float dt){
 	}
 
 	if(im.KeyPress(X_KEY) && !andando){
+		TRACE("pertei X");
 		TocarSom();
 	}
 
@@ -171,11 +172,13 @@ void Cecilia::SetGrid(int x, int y){
 }
 
 void Cecilia::TocarSom(){
+	TRACE("tocando Som");
 	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	// Usar o EventMap pra tocar todos os Ouvir() dos eventos
 	switch(audioSelecionado){
 		case 1:					// Caixa de música
+			TRACE("tocando som 1");
 			Sound* som = new Sound(associated, "assets/audio/boom.wav");
 			associated.AddComponent(som);
 			em->OuvirEventos(audioSelecionado);

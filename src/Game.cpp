@@ -113,6 +113,7 @@ void Game::Run(){
 				GetCurrentState().Start();
 			}
 
+			if (stateStack.empty()) break;
 			CalculateDeltaTime();
 			InputManager::GetInstance().Update();
 			GetCurrentState().Update(dt);

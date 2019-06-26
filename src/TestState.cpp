@@ -10,6 +10,8 @@
 #include "../include/EventMap.h"
 #include "../include/Event.h"
 #include "../include/Move.h"
+#include "../include/Dano.h"
+#include "../include/Empurravel.h"
 #include "../include/Sprite.h"
 #include "../include/Camera.h"
 #include "../include/CameraFollower.h"
@@ -52,8 +54,9 @@ TestState::TestState() : State(){
 	crab = new GameObject();
 	emap->AddEvent("Caranguejo",8,6,0,true,7);
 	emap->AddEvent("CaranguejoOuvido",8,6,2,false);
-	//emap->GetEvent("Caranguejo")->NewAction(new Dano(*(emap->GetEvent("Caranguejo")), 34));
-	//emap->GetEvent("CaranguejoOuvido")->NewAction(new Empurravel(*(emap->GetEvent("CaranguejoOuvido"))));
+	emap->GetEvent("Caranguejo")->NewAction(new Dano(*(emap->GetEvent("Caranguejo")), 34));
+	emap->GetEvent("CaranguejoOuvido")->SetSomPedido(1);
+	emap->GetEvent("CaranguejoOuvido")->NewAction(new Empurravel(*(emap->GetEvent("CaranguejoOuvido"))));
 
 	objectArray.emplace_back(em);
 

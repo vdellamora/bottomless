@@ -39,12 +39,16 @@ Event* EventMap::GetEvent(std::string identifier){
 		if(eventMatrix[i]->GetIdentifier() == identifier){ return eventMatrix[i]; }
 	}
 }
-void EventMap::RemoveEvent(Event e){
-	
+void EventMap::RemoveEvent(std::string evento){
+	for(int i = 0; i<eventMatrix.size(); i++){
+		if(eventMatrix[i]->GetIdentifier() == evento){ eventMatrix.erase(eventMatrix.begin()+i); return;}
+	}
 }
 void EventMap::OuvirEventos(int som){
+	TRACE("Ouvindo eventos");
 	for(int i = 0; i<eventMatrix.size(); i++){
-		// if(eventMatrix[i]->GetType()==2) eventMatrix[i]->Execute(som);
+		TRACEN("Evento do tipo: "); TRACE(std::to_string(eventMatrix[i]->GetType()));
+		if(eventMatrix[i]->GetType()==2){ TRACE("evento vai ouvir"); eventMatrix[i]->Execute(som);}
 	}
 }
 void EventMap::Update(float dt){
