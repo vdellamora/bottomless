@@ -10,5 +10,5 @@ void Dano::Execute(){
 	// Event* e = (Event*) associated.GetComponent("Event");
 	Cecilia::player->InfligirDano(quantidade);
 }
-bool Dano::GetDone(){}
+bool Dano::GetDone(){ return done; }
 bool Dano::Is(std::string type){return type == "Dano";}

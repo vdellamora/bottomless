@@ -11,5 +11,5 @@ void Move::Execute(){
 	// Event* e = (Event*) associated.GetComponent("Event");
 	associated.Move(Cecilia::player->GetDirection(), speed);
 }
-bool Move::GetDone(){}
+bool Move::GetDone(){return done;}
 bool Move::Is(std::string type){return type == "Move";}

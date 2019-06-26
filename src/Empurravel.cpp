@@ -18,5 +18,5 @@ void Empurravel::Execute(){
 
 	em->RemoveEvent("CaranguejoOuvido");
 }
-bool Empurravel::GetDone(){}
+bool Empurravel::GetDone(){ return done;}
 bool Empurravel::Is(std::string type){return type == "Empurravel";}

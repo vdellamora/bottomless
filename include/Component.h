@@ -15,7 +15,7 @@ public:
 	virtual void Update(float);
 	virtual void Render();
 	virtual void NotifyCollision(GameObject&);
-	virtual bool Is(std::string);
+	virtual bool Is(std::string) = 0;
 protected:
 	GameObject& associated;
 };

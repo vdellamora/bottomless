@@ -38,6 +38,7 @@ Event* EventMap::GetEvent(std::string identifier){
 	for(int i = 0; i<eventMatrix.size(); i++){
 		if(eventMatrix[i]->GetIdentifier() == identifier){ return eventMatrix[i]; }
 	}
+  return nullptr;
 }
 void EventMap::RemoveEvent(std::string evento){
 	for(int i = 0; i<eventMatrix.size(); i++){
