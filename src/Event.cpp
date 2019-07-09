@@ -48,13 +48,18 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 void Event::NewAction(Action* a){
 	listaAcoes.push_back(a);
 }
+bool Event::GetExecutando(){return executando;}
 void Event::Execute(){
-	for(auto i = listaAcoes.begin(); i != listaAcoes.end(); i++){
+	executando = true;
+	auto i = listaAcoes.begin();
+	while(i != listaAcoes.end()){
 		(*i)->Execute();
+		if( (*i)->GetDone() || !((*i)->Is("Wait")) ) i++;
 	}
+	executando = false;
 }
 void Event::Execute(int som){
-	TRACEN("som pedido: "); TRACE(std::to_string(somPedido));
+	TRACEN("som pedido: "); TRACE(TST(somPedido));
 	if(som != somPedido) return;
 	for(auto i = listaAcoes.begin(); i != listaAcoes.end(); i++){
 		(*i)->Execute();
@@ -68,7 +73,7 @@ void Event::SetGrid(int x, int y){
 	associated.box.x = 64*x;// - associated.box.w/4;
 	associated.box.y = 64*y;// - associated.box.h/2;
 }
-
+bool Event::GetParouMovimento(){return (!andando && parou);}
 Vec2 Event::GetGrid(){ return grid; }
 bool Event::GetSolido(){ return solido; }
 int Event::GetType(){ return this->type; }
@@ -128,7 +133,7 @@ void Event::Move(int direcao, int velocidade){
 bool Event::VaiColidir(int x, int y){
 	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
 	CollisionMap* cm = (CollisionMap*) tstate.GetCollisionMap().GetComponent("CollisionMap");
-	return cm->At(x,y,0) || cm->At(x,y,1) == 1;
+	return cm->At(x,y,0) == 1 || cm->At(x,y,1) == 1;
 }
 void Event::Render(){
 	if(tileNumber>=0){
@@ -138,3 +143,4 @@ void Event::Render(){
 	}
 }
 void Event::NotifyCollision(GameObject& other){}
+GameObject& Event::GetAssociated(){return associated;}

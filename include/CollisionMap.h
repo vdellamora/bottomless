@@ -13,7 +13,10 @@ public:
 	~CollisionMap();
 	void Load(std::string);
 	int& At(int, int, int);
+	void AlteraTile(int, int, int, int);
+
 	void Render();
+
 	bool Is(std::string);
 	int GetWidth();
 	int GetHeight();

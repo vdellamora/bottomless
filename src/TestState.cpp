@@ -12,6 +12,10 @@
 #include "../include/Move.h"
 #include "../include/Dano.h"
 #include "../include/Empurravel.h"
+#include "../include/Som.h"
+#include "../include/Wait.h"
+#include "../include/Alavanca.h"
+#include "../include/GSwitch.h"
 #include "../include/Sprite.h"
 #include "../include/Camera.h"
 #include "../include/CameraFollower.h"
@@ -58,6 +62,25 @@ TestState::TestState() : State(){
 	emap->GetEvent("CaranguejoOuvido")->SetSomPedido(1);
 	emap->GetEvent("CaranguejoOuvido")->NewAction(new Empurravel(*(emap->GetEvent("CaranguejoOuvido"))));
 
+	emap->AddEvent("corneta1",13,5,-1,true,31);
+	emap->GetEvent("corneta1")->NewAction(new Som(*(emap->GetEvent("corneta1")), 2));
+	// emap->GetEvent("corneta1")->NewAction(new Wait(*(emap->GetEvent("corneta1")), 2000));
+
+	emap->AddEvent("corneta2",15,5,-1,true,31);
+	emap->GetEvent("corneta2")->NewAction(new Wait(*(emap->GetEvent("corneta2")), 2000));
+	emap->GetEvent("corneta2")->NewAction(new Som(*(emap->GetEvent("corneta2")), 3));
+	// emap->GetEvent("corneta2")->NewAction(new Wait(*(emap->GetEvent("corneta2")), 2000));
+	
+	emap->AddEvent("corneta3",17,5,-1,true,30);
+	emap->GetEvent("corneta3")->NewAction(new Wait(*(emap->GetEvent("corneta3")), 4000));
+	emap->GetEvent("corneta3")->NewAction(new GSwitch(*(emap->GetEvent("corneta3")), 0, true));
+	emap->GetEvent("corneta3")->NewAction(new Som(*(emap->GetEvent("corneta3")), 5));
+	emap->GetEvent("corneta3")->NewAction(new Wait(*(emap->GetEvent("corneta3")), 1000));
+	emap->GetEvent("corneta3")->NewAction(new GSwitch(*(emap->GetEvent("corneta3")), 0, false));
+
+	emap->AddEvent("alavanca",11,4,1,true,23);
+	emap->GetEvent("alavanca")->NewAction(new Alavanca(*(emap->GetEvent("alavanca"))));
+
 	objectArray.emplace_back(em);
 
 	cecilia = new GameObject();
@@ -91,6 +114,38 @@ void TestState::Update(float dt){
 
 	if(im.QuitRequested()) quitRequested = true;
 	if(im.KeyPress(ESCAPE_KEY)){ TRACE("stage POP"); popRequested = true; return;}
+
+	EventMap* emap = (EventMap*) em->GetComponent("EventMap");
+	if(emap->GetEvent("Caranguejo") != nullptr){
+		if((emap->GetEvent("Caranguejo")->GetGrid().x == 10) && (emap->GetEvent("Caranguejo")->GetParouMovimento())){
+			
+			((TileMap*) tm->GetComponent("TileMap"))->AlteraTile(
+				emap->GetEvent("Caranguejo")->GetGrid().x,
+				emap->GetEvent("Caranguejo")->GetGrid().y, 1, 6);	// Altera o desenho do chão
+			((CollisionMap*) cm->GetComponent("CollisionMap"))->AlteraTile(
+				emap->GetEvent("Caranguejo")->GetGrid().x,
+				emap->GetEvent("Caranguejo")->GetGrid().y, 0, 0);	// Altera a colisão do chão
+			
+			TRACE(TST(((CollisionMap*) cm->GetComponent("CollisionMap"))->At(
+				emap->GetEvent("Caranguejo")->GetGrid().x,
+				emap->GetEvent("Caranguejo")->GetGrid().y, 1)));
+			emap->RemoveEvent("Caranguejo");
+
+
+			emap->AddEvent("Golfinho1",11,9,1,true,7);
+			emap->GetEvent("Golfinho1")->NewAction(new Som(*(emap->GetEvent("Golfinho1")), 2));
+			emap->AddEvent("Golfinho2",12,8,1,true,7);
+			emap->GetEvent("Golfinho2")->NewAction(new Som(*(emap->GetEvent("Golfinho2")), 3));
+			emap->AddEvent("Golfinho3",13,9,1,true,7);
+			emap->GetEvent("Golfinho3")->NewAction(new Som(*(emap->GetEvent("Golfinho3")), 4));
+
+
+			emap->GetEvent("Golfinho1")->Execute();
+			emap->GetEvent("Golfinho2")->Execute();
+			emap->GetEvent("Golfinho3")->Execute();
+		}
+	}
+
 
 	for(int i = 0; i < objectArray.size(); i++){
 		objectArray[i].get()->Update(dt);

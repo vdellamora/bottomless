@@ -17,6 +17,8 @@ void Empurravel::Execute(){
 	em->GetEvent("Caranguejo")->NewAction(new Move(*(em->GetEvent("Caranguejo")), 0, 4));
 
 	em->RemoveEvent("CaranguejoOuvido");
+
+	done = true;
 }
 bool Empurravel::GetDone(){ return done;}
 bool Empurravel::Is(std::string type){return type == "Empurravel";}

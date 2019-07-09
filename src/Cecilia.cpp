@@ -13,6 +13,7 @@
 Cecilia *Cecilia::player = nullptr;
 
 Cecilia::Cecilia(GameObject& associated) : Component(associated){
+	gravando = false;	 bancoDeSons.insert(1);
 	andando = false;	 parou = true;
 	direcao = 2;		 caminho = 0;
 	direcaoAnterior = 2; hp = 100;
@@ -66,8 +67,10 @@ void Cecilia::Update(float dt){
 	}
 
 	if(im.KeyPress(X_KEY) && !andando){
-		TRACE("pertei X");
 		TocarSom();
+	}
+	if(im.KeyPress(S_KEY) && !andando){
+		PrepararGravador();
 	}
 
 	if(im.IsKeyDown(UP_ARROW_KEY) && !andando){
@@ -163,25 +166,29 @@ void Cecilia::VaiInteragir(int x, int y){
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	Event* e = em->At(x,y);
 	if(e->vazio) return;
-	if(e->GetType()==1) e->Execute();
+	if(e->GetType()==1){e->Execute(); gravando = false;}
 }
 void Cecilia::SetGrid(int x, int y){
 	grid = Vec2(x,y);
 	associated.box.x = 64*x - associated.box.w/4;
 	associated.box.y = 64*y - associated.box.h/2;
 }
-
+void Cecilia::PrepararGravador(){
+	gravando = true;
+}
+void Cecilia::AddSound(int id){
+	if(bancoDeSons.find(id) != bancoDeSons.end()) bancoDeSons.insert(id);
+}
 void Cecilia::TocarSom(){
-	TRACE("tocando Som");
 	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	// Usar o EventMap pra tocar todos os Ouvir() dos eventos
 	switch(audioSelecionado){
 		case 1:					// Caixa de música
-			TRACE("tocando som 1");
 			Sound* som = new Sound(associated, "assets/audio/boom.wav");
 			associated.AddComponent(som);
 			em->OuvirEventos(audioSelecionado);
+			som->Play();
 			break;
 	}
 }
@@ -192,6 +199,8 @@ void Cecilia::InfligirDano(int dano){
 	Move((direcao+2)%4+1);
 }
 
+bool Cecilia::GetGravando(){return gravando;}
+bool Cecilia::GetParouMovimento(){return (!andando && parou);}
 void Cecilia::NotifyCollision(GameObject& other){}
 int Cecilia::GetDirection(){ return direcao; }
 bool Cecilia::Is(std::string type){ return type == "Cecilia"; }

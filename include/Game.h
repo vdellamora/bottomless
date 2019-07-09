@@ -19,6 +19,8 @@ public:
 	void Push(State*);
 	void Run();
 	float GetDeltaTime();
+
+	static bool VAR_GLOBAL[10];
 private:
 	void CalculateDeltaTime();
 	int frameStart;

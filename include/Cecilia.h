@@ -8,6 +8,7 @@
 #include "Event.h"
 #include <iostream>
 #include <memory>
+#include <set>
 
 #define CECILIA_MOVE_SPEED 4
 #define CECILIA_IDLE_SPEED 0.2f
@@ -23,18 +24,23 @@ public:
 	void Start();
 	void Update(float);
 	void Render();
+
 	bool Is(std::string);
+	void SetGrid(int, int);
 	void NotifyCollision(GameObject&);
+	void InfligirDano(int);
 
 	void Move(int);
-	void SetGrid(int, int);
 	bool VaiColidir(int, int);
 	void VaiInteragir(int, int);
+	bool GetParouMovimento();
 	int GetDirection();
 	// void Walk(int);
 
+	void PrepararGravador();
+	void AddSound(int);
 	void TocarSom();
-	void InfligirDano(int);
+	bool GetGravando();
 
 private:
 	Sprite* spr;
@@ -50,6 +56,8 @@ private:
 
 	int hp;
 	int audioSelecionado;
+	bool gravando;
+	std::set<int> bancoDeSons;
 
 	Event* eventoPraExecutar;
 	float dbg_tempoWalk;

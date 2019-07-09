@@ -47,6 +47,9 @@ int& CollisionMap::At(int x, int y, int z){
 	return collisionMatrix[conta]; 
 	//return &collisionMatrix[x][y][z];
 }
+void CollisionMap::AlteraTile(int x, int y, int z, int colisao){
+	collisionMatrix[z*mapWidth*mapHeight + y*mapWidth + x] = colisao;
+}
 
 bool CollisionMap::Is(std::string type){ return (type == "CollisionMap");}
 int CollisionMap::GetWidth(){ return mapWidth;}

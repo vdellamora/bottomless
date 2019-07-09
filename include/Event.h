@@ -27,10 +27,12 @@ public:
 	void NotifyCollision(GameObject&);
 
 	void NewAction(Action*);
+	bool GetExecutando();
 	void Execute();
 	void Execute(int);
 
 	void Move(int, int);
+	bool GetParouMovimento();
 	bool VaiColidir(int, int);
 	void SetGrid(int, int);
 	Vec2 GetGrid();
@@ -38,8 +40,9 @@ public:
 	int GetType();
 	void SetSomPedido(int);
 	int GetSomPedido();
-	std::string GetIdentifier();
 
+	std::string GetIdentifier();
+	GameObject& GetAssociated();
 	bool vazio;
 
 private:
@@ -47,11 +50,12 @@ private:
 	enum EventType {PRESS, TOUCH, LISTEN};
 	int type;
 	int somPedido;
+	bool executando;
 
-	Vec2 grid;
-	Sprite* spr;
 	std::string identifier;
 	int tileNumber;
+	Sprite* spr;
+	Vec2 grid;
 	int direcao;
 	int velocidade;
 

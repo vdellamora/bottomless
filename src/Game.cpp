@@ -3,7 +3,7 @@
 #include <ctime>
 #include <memory>
 
-
+bool Game::VAR_GLOBAL[10];
 Game* Game::instance = nullptr;
 
 Game& Game::GetInstance(){
@@ -13,6 +13,10 @@ Game& Game::GetInstance(){
 }
 
 Game::Game(std::string title, int width, int height){
+	//VAR_GLOBAL VARIAVEIS:
+	Game::VAR_GLOBAL[0] = false; //0 - Pronto para tocar corneta 3
+
+
 	std::srand(time(NULL));
 	dt = 0;
 	frameStart = 0;

@@ -55,6 +55,9 @@ int& TileMap::At(int x, int y, int z){
 	return tileMatrix[z*mapWidth*mapHeight + y*mapWidth + x]; 
 	//return &tileMatrix[x][y][z];
 }
+void TileMap::AlteraTile(int x, int y, int z, int tile){
+	tileMatrix[z*mapWidth*mapHeight + y*mapWidth + x] = tile;
+}
 void TileMap::Render(){
 	for(int i = 0; i<mapDepth; i++){
 		RenderLayer(i, Camera::pos.x, Camera::pos.y);
