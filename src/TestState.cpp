@@ -47,7 +47,24 @@ TestState::TestState() : State(){
 	cm->AddComponent(cmap);
 	objectArray.emplace_back(cm);
 
+
+
+	
+	music = Music();
+	quitRequested = false;
+}
+
+void TestState::Start(){
+	if(popRequested) return;
+	StartArray();
+	LoadAssets();
+}
+
+void TestState::LoadAssets(){
+	// Carregar tudo
 	em = new GameObject();
+	CollisionMap* cmap = (CollisionMap*) cm->GetComponent("CollisionMap");
+
 	EventMap* emap = new EventMap(*em, 
 		cmap->GetWidth(), cmap->GetHeight());
 	em->AddComponent(emap);
@@ -81,6 +98,10 @@ TestState::TestState() : State(){
 	emap->AddEvent("alavanca",11,4,1,true,23);
 	emap->GetEvent("alavanca")->NewAction(new Alavanca(*(emap->GetEvent("alavanca"))));
 
+	emap->AddEvent("AguaViva",18,6,2,true);
+	emap->GetEvent("AguaViva")->SetSomPedido(1);
+	emap->GetEvent("AguaViva")->NewAction(new Empurravel(*(emap->GetEvent("AguaViva"))));
+
 	objectArray.emplace_back(em);
 
 	cecilia = new GameObject();
@@ -92,18 +113,8 @@ TestState::TestState() : State(){
 	// Camera::Follow(cecilia);
 	objectArray.emplace_back(cecilia);
 
-	music = Music();
-	quitRequested = false;
-}
 
-void TestState::Start(){
-	if(popRequested) return;
-	StartArray();
-	LoadAssets();
-}
 
-void TestState::LoadAssets(){
-	// Carregar tudo
 	music.Open("assets/audio/fundo.mp3");
 	music.Play();
 }
