@@ -7,7 +7,6 @@
 #include "../include/Collider.h"
 #include "../include/CollisionMap.h"
 #include "../include/EventMap.h"
-#include "../include/Event.h"
 #include "../include/Sound.h"
 
 Cecilia *Cecilia::player = nullptr;
@@ -73,22 +72,44 @@ void Cecilia::Update(float dt){
 		PrepararGravador();
 	}
 
-	if(im.IsKeyDown(UP_ARROW_KEY) && !andando){
-		Move(1);
-	}
-	if(im.IsKeyDown(RIGHT_ARROW_KEY) && !andando){
-		Move(2);
-	}
-	if(im.IsKeyDown(DOWN_ARROW_KEY) && !andando){
-		Move(3);
-	}
-	if(im.IsKeyDown(LEFT_ARROW_KEY) && !andando){
-		Move(4);
-	}
+  if(im.IsKeyDown(UP_ARROW_KEY) && !andando){
+    Move(1);
+  }
+  if(im.IsKeyDown(RIGHT_ARROW_KEY) && !andando){
+    Move(2);
+  }
+  if(im.IsKeyDown(DOWN_ARROW_KEY) && !andando){
+    Move(3);
+  }
+  if(im.IsKeyDown(LEFT_ARROW_KEY) && !andando){
+    Move(4);
+  }
+  TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+  CollisionMap* cm = (CollisionMap*) tstate.GetCollisionMap().GetComponent("CollisionMap");
+  if(im.KeyPress(I_KEY) && !andando){
+    SetGrid(grid.x, grid.y-1);
+    printf("ceclia x = %.2f, y = %.2f\n", grid.x, grid.y);
+    printf("cm x,y = %d\n", cm->At(grid.x, grid.y, 0));
+  }
+  if(im.KeyPress(L_KEY) && !andando){
+    SetGrid(grid.x+1, grid.y);
+    printf("ceclia x = %.2f, y = %.2f\n", grid.x, grid.y);
+    printf("cm x,y = %d\n", cm->At(grid.x, grid.y, 0));
+  }
+  if(im.KeyPress(K_KEY) && !andando){
+    SetGrid(grid.x, grid.y+1);
+    printf("ceclia x = %.2f, y = %.2f\n", grid.x, grid.y);
+    printf("cm x,y = %d\n", cm->At(grid.x, grid.y, 0));
+  }
+  if(im.KeyPress(J_KEY) && !andando){
+    SetGrid(grid.x-1, grid.y);
+    printf("ceclia x = %.2f, y = %.2f\n", grid.x, grid.y);
+    printf("cm x,y = %d\n", cm->At(grid.x, grid.y, 0));
+  }
 
 	if(andando){
-		if(caminho<64){
-			switch(direcao){
+		if(caminho<24){
+      switch(direcao){
 				case 1:
 					associated.box.y -= CECILIA_MOVE_SPEED;
 					break;
@@ -143,22 +164,25 @@ void Cecilia::Update(float dt){
 }
 bool Cecilia::VaiColidir(int x, int y){
 	bool retorno = false;
-	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	State tstate = Game::GetInstance().GetCurrentState();
 	CollisionMap* cm = (CollisionMap*) tstate.GetCollisionMap().GetComponent("CollisionMap");
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
-	Event* e = em->At(x,y);
-	if(!e->vazio){
-		if(e->GetType()==0){
-			if(e->GetSolido()){
-				e->Execute();
-				return true;
-			} else {
-				eventoPraExecutar = e;
-			}
-		} else if(e->GetSolido()) return true;
-	}
+  if (em){
+    Event* e = em->At(x,y);
+    if(!e->vazio){
+      if(e->GetType()==0){
+        if(e->GetSolido()){
+          e->Execute();
+          return true;
+        } else {
+          eventoPraExecutar = e;
+        }
+      } else if(e->GetSolido()) return true;
+    }
+  }
+	
 	retorno = cm->At(x,y,0) || cm->At(x,y,1) == 1;
-	if(retorno) eventoPraExecutar = new Event(associated);
+  if(retorno) eventoPraExecutar = new Event(associated);
 	return retorno;
 }
 void Cecilia::VaiInteragir(int x, int y){
@@ -170,8 +194,8 @@ void Cecilia::VaiInteragir(int x, int y){
 }
 void Cecilia::SetGrid(int x, int y){
 	grid = Vec2(x,y);
-	associated.box.x = 64*x - associated.box.w/4;
-	associated.box.y = 64*y - associated.box.h/2;
+	associated.box.x = 24*x - associated.box.w/4;
+	associated.box.y = 24*y - associated.box.h/2;
 }
 void Cecilia::PrepararGravador(){
 	gravando = true;

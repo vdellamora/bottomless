@@ -4,6 +4,8 @@
 #include "inclusao.h"
 #include <iostream>
 #include "GameObject.h"
+#include "Music.h"
+#include "TileSet.h"
 #include <memory>
 
 class State{
@@ -20,7 +22,10 @@ public:
 
 	std::weak_ptr<GameObject> virtual AddObject(GameObject*);
 	std::weak_ptr<GameObject> virtual GetObjectPtr(GameObject*);
-
+  TileSet& GetTileSet();
+  GameObject& GetCollisionMap();
+  GameObject& GetEventMap();
+  
 	bool PopRequested();
 	bool QuitRequested();
 protected:
@@ -32,7 +37,11 @@ protected:
 	bool quitRequested;
 	bool started;
 	std::vector<std::shared_ptr<GameObject>> objectArray;
-
+  GameObject* tm;
+  GameObject* cm;
+  GameObject* em;
+  TileSet* ts;
+  Music music;
 };
 
 #endif //C_STATE
