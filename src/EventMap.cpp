@@ -21,9 +21,9 @@ void EventMap::AddEvent(std::string identifier, int x, int y, int type, bool sol
 	// if(x>eventMatrix.size() || y>eventMatrix[x].size()){ TRACE("Deu ruim aqui, meu bom. Tentou botar evento onde num tem."); return; }
 	eventMatrix.push_back(e1);
 }
-void EventMap::AddEvent(std::string identifier, int x, int y, int type, bool solido, std::string sprite){
+void EventMap::AddEvent(std::string identifier, int x, int y, int type, bool solido, std::string sprite, int frames){
 	GameObject* ev = new GameObject();
-	Event* e1 = new Event(*ev, identifier, type, solido, sprite);
+	Event* e1 = new Event(*ev, identifier, type, solido, sprite, frames);
 	e1->SetGrid(x,y);
 	eventMatrix.push_back(e1);
 }

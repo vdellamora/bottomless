@@ -14,13 +14,13 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	andando = false;	parou = true;
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
-	somPedido = 0;
+	somPedido = 0;		spr = nullptr;
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
 	associated.AddComponent(new Collider(associated));
 }
-Event::Event(GameObject& associated, std::string identifier, int type, bool solido, std::string file) : Component(associated){
+Event::Event(GameObject& associated, std::string identifier, int type, bool solido, std::string file, int frames) : Component(associated){
 	andando = false;	parou = true;
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
@@ -28,7 +28,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
-	spr = new Sprite(associated, file.c_str());
+	spr = new Sprite(associated, file.c_str(), frames, EVENT_IDLE_SPEED);
 	associated.AddComponent(spr);
 	associated.AddComponent(new Collider(associated));
 }
@@ -36,7 +36,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	andando = false;	parou = true;
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
-	somPedido = 0;
+	somPedido = 0;		spr = nullptr;
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
@@ -51,10 +51,10 @@ void Event::NewAction(Action* a){
 bool Event::GetExecutando(){return executando;}
 void Event::Execute(){
 	executando = true;
-	auto i = listaAcoes.begin();
-	while(i != listaAcoes.end()){
-		(*i)->Execute();
-		if( (*i)->GetDone() || !((*i)->Is("Wait")) ) i++;
+	auto eventoAtual = listaAcoes.begin();
+	while(eventoAtual != listaAcoes.end()){
+		(*eventoAtual)->Execute();
+		if( (*eventoAtual)->GetDone() || !((*eventoAtual)->Is("Wait")) ) eventoAtual++;
 	}
 	executando = false;
 }
@@ -70,8 +70,15 @@ int Event::GetSomPedido(){return somPedido;}
 
 void Event::SetGrid(int x, int y){
 	grid = Vec2(x,y);
-	associated.box.x = 64*x;// - associated.box.w/4;
-	associated.box.y = 64*y;// - associated.box.h/2;
+	float ajustex = 0;
+	float ajustey = 0;
+	if(spr != nullptr){
+		ajustex = associated.box.w/4;
+		ajustey = associated.box.h/2;
+	}
+
+	associated.box.x = 64*x - ajustex;// - associated.box.w/4;
+	associated.box.y = 64*y - ajustey;// - associated.box.h/2;
 }
 bool Event::GetParouMovimento(){return (!andando && parou);}
 Vec2 Event::GetGrid(){ return grid; }
@@ -108,6 +115,8 @@ void Event::Update(float dt){
 			parou = true;
 		}
 	}
+
+	if(spr != nullptr) spr->Update(dt);
 }
 void Event::Move(int direcao, int velocidade){
 	this->velocidade = velocidade;
@@ -141,6 +150,8 @@ void Event::Render(){
 		TileSet ts = tstate.GetTileSet();
 		ts.RenderTile(tileNumber, associated.box.x, associated.box.y);
 	}
+
+	if(spr != nullptr) spr->Render();
 }
 void Event::NotifyCollision(GameObject& other){}
 GameObject& Event::GetAssociated(){return associated;}

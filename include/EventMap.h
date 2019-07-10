@@ -13,9 +13,9 @@ public:
 	EventMap(GameObject&, int, int);
 	~EventMap();
 
-	void AddEvent(std::string, int, int, int, bool);				// Sem sprite
-	void AddEvent(std::string, int, int, int, bool, std::string);	// Sprite próprio
-	void AddEvent(std::string, int, int, int, bool, int);			// Sprite do tileset
+	void AddEvent(std::string, int, int, int, bool);					// Sem sprite
+	void AddEvent(std::string, int, int, int, bool, std::string, int);	// Sprite próprio
+	void AddEvent(std::string, int, int, int, bool, int);				// Sprite do tileset
 	Event* At(int, int);
 	Event* GetEvent(std::string);
 	void RemoveEvent(std::string);

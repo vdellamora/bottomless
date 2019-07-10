@@ -19,6 +19,10 @@ Wait::Wait(Event& associated, float miliseconds) : Action(associated){
 Wait::~Wait(){}
 void Wait::Execute(){
 	if(!start){ t->Restart(); start = true;}
+	
+}
+void Wait::Update(float dt){
+	if(start) t->Update(dt);
 	if(t->Get() >= miliseconds) done = true;
 }
 bool Wait::GetDone(){return done;}

@@ -73,7 +73,7 @@ void TestState::LoadAssets(){
 	emap->GetEvent("testeMove")->NewAction(new Move(*(emap->GetEvent("testeMove")), 0, 4));
 
 	crab = new GameObject();
-	emap->AddEvent("Caranguejo",8,6,0,true,7);
+	emap->AddEvent("Caranguejo",8,6,0,true,"assets/img/caranguejao.png",20);
 	emap->AddEvent("CaranguejoOuvido",8,6,2,false);
 	emap->GetEvent("Caranguejo")->NewAction(new Dano(*(emap->GetEvent("Caranguejo")), 34));
 	emap->GetEvent("CaranguejoOuvido")->SetSomPedido(1);

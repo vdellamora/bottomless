@@ -15,6 +15,7 @@ public:
 	Wait(Event&, float);
 	~Wait();
 	void Execute();
+	void Update(float);
 	bool GetDone();
 	bool Is(std::string);
 private:

@@ -13,6 +13,7 @@ public:
 	virtual ~Action();
 	virtual void Execute();
 	virtual bool GetDone();
+	virtual void Update(float);
 	virtual bool Is(std::string) = 0;
 protected:
 	Event& associated;

@@ -10,6 +10,8 @@
 #include <memory>
 #include <queue>
 
+#define EVENT_IDLE_SPEED 0.2f
+
 class GameObject;
 class Action;
 class Event : public Component{
@@ -17,7 +19,7 @@ class Event : public Component{
 public:
 	Event(GameObject&);
 	Event(GameObject&, std::string, int, bool);
-	Event(GameObject&, std::string, int, bool, std::string); // Sprite próprio
+	Event(GameObject&, std::string, int, bool, std::string, int); // Sprite próprio
 	Event(GameObject&, std::string, int, bool, int);		 // Sprite do TileSet
 	~Event();
 	void Start();
@@ -51,6 +53,7 @@ private:
 	int type;
 	int somPedido;
 	bool executando;
+	// auto eventoAtual;
 
 	std::string identifier;
 	int tileNumber;
