@@ -54,3 +54,6 @@ void State::Resume(){}
 void State::Pause(){}
 bool State::PopRequested(){ return popRequested;}
 bool State::QuitRequested(){ return quitRequested;}
+TileSet& State::GetTileSet(){return *ts;}
+GameObject& State::GetCollisionMap(){return *cm;}
+GameObject& State::GetEventMap(){return *em;}
