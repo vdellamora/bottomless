@@ -11,6 +11,10 @@
 #define D_KEY				SDLK_d
 #define Z_KEY				SDLK_z
 #define X_KEY				SDLK_x
+#define I_KEY        SDLK_i
+#define J_KEY        SDLK_j
+#define K_KEY        SDLK_k
+#define L_KEY        SDLK_l
 #define LEFT_ARROW_KEY		SDLK_LEFT
 #define RIGHT_ARROW_KEY		SDLK_RIGHT
 #define UP_ARROW_KEY		SDLK_UP
