@@ -26,9 +26,9 @@ Cecilia::Cecilia(GameObject& associated) : Component(associated){
 }
 void Cecilia::Move(int direcao){
 	int queroX, queroY; std::string spriteNovo; bool flipa;
-	if(direcao == 1){ queroX = grid.x;   queroY = grid.y-1; spriteNovo = "assets/img/CeciliaWalkUp.png"; flipa = false;}
+	if(direcao == 1){ queroX = grid.x;   queroY = grid.y-1; spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = ((Sprite*)associated.GetComponent("Sprite"))->GetFlip();}
 	if(direcao == 2){ queroX = grid.x+1; queroY = grid.y;   spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = false;}
-	if(direcao == 3){ queroX = grid.x;   queroY = grid.y+1; spriteNovo = "assets/img/CeciliaWalkDown.png"; flipa = false;}
+	if(direcao == 3){ queroX = grid.x;   queroY = grid.y+1; spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = ((Sprite*)associated.GetComponent("Sprite"))->GetFlip();}
 	if(direcao == 4){ queroX = grid.x-1; queroY = grid.y;   spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = true;}
 
 	this->direcao = direcao;
@@ -84,7 +84,7 @@ void Cecilia::Update(float dt){
   if(im.IsKeyDown(LEFT_ARROW_KEY) && !andando){
     Move(4);
   }
-  TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+  State tstate = Game::GetInstance().GetCurrentState();
   CollisionMap* cm = (CollisionMap*) tstate.GetCollisionMap().GetComponent("CollisionMap");
   if(im.KeyPress(I_KEY) && !andando){
     SetGrid(grid.x, grid.y-1);
@@ -137,7 +137,7 @@ void Cecilia::Update(float dt){
 				switch(direcao){
 					case 1:
 						spr->NewSprite("assets/img/CeciliaIdle.png", 11, CECILIA_IDLE_SPEED);
-						spr->SetFlip(false);
+						spr->SetFlip(spr->GetFlip());
 						break;
 					case 2:
 						spr->NewSprite("assets/img/CeciliaIdle.png", 11, CECILIA_IDLE_SPEED);
@@ -145,7 +145,7 @@ void Cecilia::Update(float dt){
 						break;
 					case 3:
 						spr->NewSprite("assets/img/CeciliaIdle.png", 11, CECILIA_IDLE_SPEED);
-						spr->SetFlip(true);
+						spr->SetFlip(spr->GetFlip());
 						break;
 					case 4:
 						spr->NewSprite("assets/img/CeciliaIdle.png", 11, CECILIA_IDLE_SPEED);
@@ -167,21 +167,27 @@ bool Cecilia::VaiColidir(int x, int y){
 	State tstate = Game::GetInstance().GetCurrentState();
 	CollisionMap* cm = (CollisionMap*) tstate.GetCollisionMap().GetComponent("CollisionMap");
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
-  if (em){
-    Event* e = em->At(x,y);
-    if(!e->vazio){
-      if(e->GetType()==0){
-        if(e->GetSolido()){
-          e->Execute();
-          return true;
-        } else {
-          eventoPraExecutar = e;
-        }
-      } else if(e->GetSolido()) return true;
+  Event* e = em->At(x,y);
+  if(!e->vazio){
+    if(e->GetType()==0){
+      if(e->GetSolido()){
+        e->Execute();
+        return true;
+      } else {
+        eventoPraExecutar = e;
+      }
+    } else if(e->GetSolido()) return true;
+  }
+  
+  //se em alguma camada tiver colisão, seta como true;
+  for (int i = 0; i < cm->GetDepth(); i++){
+    if(cm->At(x, y, i) == 1) {
+      retorno = true;
+      break;
     }
   }
-	
-	retorno = cm->At(x,y,0) || cm->At(x,y,1) == 1;
+  
+  
   if(retorno) eventoPraExecutar = new Event(associated);
 	return retorno;
 }
