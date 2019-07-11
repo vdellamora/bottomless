@@ -107,7 +107,7 @@ void Cecilia::Update(float dt){
   }
 
 	if(andando){
-		if(caminho<64){
+		if(caminho<CECILIA_TILE_SIZE){
       switch(direcao){
 				case 1:
 					associated.box.y -= CECILIA_MOVE_SPEED;
@@ -177,7 +177,7 @@ bool Cecilia::VaiColidir(int x, int y){
       }
     } else if(e->GetSolido()) return true;
   }
-  
+  TRACE("opa");
   //se em alguma camada tiver colisão, seta como true;
   for (int i = 0; i < cm->GetDepth(); i++){
     if(cm->At(x, y, i) == 1) {
@@ -185,7 +185,6 @@ bool Cecilia::VaiColidir(int x, int y){
       break;
     }
   }
-  
   
   if(retorno) eventoPraExecutar = new Event(associated);
 	return retorno;
@@ -199,8 +198,8 @@ void Cecilia::VaiInteragir(int x, int y){
 }
 void Cecilia::SetGrid(int x, int y){
 	grid = Vec2(x,y);
-	associated.box.x = 64*x - associated.box.w/4;
-	associated.box.y = 64*y - associated.box.h/2;
+	associated.box.x = CECILIA_TILE_SIZE*x - associated.box.w/4;
+	associated.box.y = CECILIA_TILE_SIZE*y - associated.box.h/2;
 }
 void Cecilia::PrepararGravador(){
 	gravando = true;
