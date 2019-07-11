@@ -94,7 +94,7 @@ void TestState::LoadAssets(){
 
   emap->AddEvent("AguaViva",18,6,2,true);
   emap->GetEvent("AguaViva")->SetSomPedido(1);
-  emap->GetEvent("AguaViva")->NewAction(new Empurravel(*(emap->GetEvent("AguaViva"))));
+  // emap->GetEvent("AguaViva")->NewAction(new Empurravel(*(emap->GetEvent("AguaViva"))));
 
 	objectArray.emplace_back(em);
 
@@ -145,9 +145,9 @@ void TestState::Update(float dt){
 			emap->GetEvent("Golfinho3")->NewAction(new Som(*(emap->GetEvent("Golfinho3")), 4));
 
 
-			emap->GetEvent("Golfinho1")->Execute();
-			emap->GetEvent("Golfinho2")->Execute();
-			emap->GetEvent("Golfinho3")->Execute();
+			// emap->GetEvent("Golfinho1")->Execute();
+			// emap->GetEvent("Golfinho2")->Execute();
+			// emap->GetEvent("Golfinho3")->Execute();
 		}
 	}
 

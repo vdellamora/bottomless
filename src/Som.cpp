@@ -6,10 +6,10 @@
 #include "../include/Cecilia.h"
 
 Som::Som(Event& associated, int s) : Action(associated){
-	id = s;	TRACE("som tst 1");
-	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState(); TRACE("som tst 2");
-	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap"); TRACE("som tst 3");
-	Event* e = em->GetEvent(associated.GetIdentifier()); TRACE("som tst 4");
+	id = s;
+	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
+	Event* e = em->GetEvent(associated.GetIdentifier());
 	switch(s){
 		case 1:
 			this->s = new Sound(e->GetAssociated(), "assets/audio/boom.wav");
