@@ -26,9 +26,9 @@ Cecilia::Cecilia(GameObject& associated) : Component(associated){
 }
 void Cecilia::Move(int direcao){
 	int queroX, queroY; std::string spriteNovo; bool flipa;
-	if(direcao == 1){ queroX = grid.x;   queroY = grid.y-1; spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = true;}
+	if(direcao == 1){ queroX = grid.x;   queroY = grid.y-1; spriteNovo = "assets/img/CeciliaWalkUp.png"; flipa = false;}
 	if(direcao == 2){ queroX = grid.x+1; queroY = grid.y;   spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = false;}
-	if(direcao == 3){ queroX = grid.x;   queroY = grid.y+1; spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = false;}
+	if(direcao == 3){ queroX = grid.x;   queroY = grid.y+1; spriteNovo = "assets/img/CeciliaWalkDown.png"; flipa = false;}
 	if(direcao == 4){ queroX = grid.x-1; queroY = grid.y;   spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = true;}
 
 	this->direcao = direcao;
