@@ -107,7 +107,7 @@ void Cecilia::Update(float dt){
   }
 
 	if(andando){
-		if(caminho<24){
+		if(caminho<64){
       switch(direcao){
 				case 1:
 					associated.box.y -= CECILIA_MOVE_SPEED;
@@ -199,8 +199,8 @@ void Cecilia::VaiInteragir(int x, int y){
 }
 void Cecilia::SetGrid(int x, int y){
 	grid = Vec2(x,y);
-	associated.box.x = 24*x - associated.box.w/4;
-	associated.box.y = 24*y - associated.box.h/2;
+	associated.box.x = 64*x - associated.box.w/4;
+	associated.box.y = 64*y - associated.box.h/2;
 }
 void Cecilia::PrepararGravador(){
 	gravando = true;

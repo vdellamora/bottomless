@@ -1,6 +1,6 @@
 #include "../include/Alavanca.h"
 #include "../include/Game.h"
-#include "../include/TestState.h"
+#include "../include/State.h"
 #include "../include/EventMap.h"
 #include "../include/Event.h"
 #include "../include/Cecilia.h"
@@ -9,7 +9,7 @@ Alavanca::Alavanca(Event& associated) : Action(associated){
 }
 Alavanca::~Alavanca(){}
 void Alavanca::Execute(){
-	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	State tstate = Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	Event* e1 = em->GetEvent("corneta1");
 	Event* e2 = em->GetEvent("corneta2");

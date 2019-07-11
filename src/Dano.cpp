@@ -11,5 +11,4 @@ void Dano::Execute(){
 	Cecilia::player->InfligirDano(quantidade);
 	done = true;
 }
-bool Dano::GetDone(){ return done; }
 bool Dano::Is(std::string type){return type == "Dano";}

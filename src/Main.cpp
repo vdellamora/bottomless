@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv){
 	auto &j = Game::GetInstance();
-	j.Push(new SubState());
+	j.Push(new TestState());
 	j.Run();
 
 	return 0;

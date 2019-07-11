@@ -24,7 +24,6 @@ private:
 	GameObject* bg;
 	GameObject* cecilia;
 	GameObject* crab;
-	TileSet* ts;
 	Music music;
 
 };

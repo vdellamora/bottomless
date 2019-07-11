@@ -7,7 +7,7 @@
 
 Wait::Wait(Event& associated, float miliseconds) : Action(associated){
 	this->miliseconds = miliseconds;
-	this->start = false;
+	this->started = false;
 	State tstate = Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	Event* e = em->GetEvent(associated.GetIdentifier());
@@ -18,12 +18,11 @@ Wait::Wait(Event& associated, float miliseconds) : Action(associated){
 }
 Wait::~Wait(){}
 void Wait::Execute(){
-	if(!start){ t->Restart(); start = true;}
+	if(!started){ t->Restart(); started = true;}
 	
 }
 void Wait::Update(float dt){
-	if(start) t->Update(dt);
+	if(started) t->Update(dt);
 	if(t->Get() >= miliseconds) done = true;
 }
-bool Wait::GetDone(){return done;}
 bool Wait::Is(std::string type){return type == "Wait";}

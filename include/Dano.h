@@ -14,7 +14,6 @@ public:
 	Dano(Event&, int);
 	~Dano();
 	void Execute();
-	bool GetDone();
 	bool Is(std::string);
 private:
 	int quantidade;

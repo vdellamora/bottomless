@@ -49,13 +49,8 @@ void Event::NewAction(Action* a){
 }
 bool Event::GetExecutando(){return executando;}
 void Event::Execute(){
+	eventoAtual = listaAcoes.begin();
 	executando = true;
-	auto eventoAtual = listaAcoes.begin();
-	while(eventoAtual != listaAcoes.end()){
-		(*eventoAtual)->Execute();
-		if( (*eventoAtual)->GetDone() || !((*eventoAtual)->Is("Wait")) ) eventoAtual++;
-	}
-	executando = false;
 }
 void Event::Execute(int som){
 	TRACEN("som pedido: "); TRACE(TST(somPedido));
@@ -112,6 +107,24 @@ void Event::Update(float dt){
 			SetGrid(nx,ny);
 			andando = false;
 			parou = true;
+		}
+	}
+
+	if(executando){
+		if(eventoAtual != listaAcoes.end()){
+			
+			if((*eventoAtual)->GetStarted()){
+				if((*eventoAtual)->GetDone()){
+				eventoAtual++;
+				} else {
+					(*eventoAtual)->Update(dt);
+				}
+			} else {
+				(*eventoAtual)->Execute();
+			}
+			
+		} else {
+			executando = false;
 		}
 	}
 

@@ -13,7 +13,8 @@ void Empurravel::Execute(){
 
 	em->RemoveEvent("Caranguejo");
 
-	em->AddEvent("Caranguejo",8,6,0,true,6);
+	// em->AddEvent("Caranguejo",8,6,0,true,6);
+	em->AddEvent("Caranguejo",8,6,0,true,"assets/img/caranguejaoSleep.png",15);
 	em->GetEvent("Caranguejo")->NewAction(new Move(*(em->GetEvent("Caranguejo")), 0, 4));
 
 	em->RemoveEvent("CaranguejoOuvido");

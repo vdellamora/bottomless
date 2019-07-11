@@ -16,11 +16,9 @@ public:
 	~Wait();
 	void Execute();
 	void Update(float);
-	bool GetDone();
 	bool Is(std::string);
 private:
 	float miliseconds;
-	bool start;
 	Timer* t;
 };
 
