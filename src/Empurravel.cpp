@@ -1,6 +1,6 @@
 #include "../include/Empurravel.h"
 #include "../include/Game.h"
-#include "../include/TestState.h"
+#include "../include/State.h"
 #include "../include/EventMap.h"
 #include "../include/Event.h"
 #include "../include/Move.h"
@@ -8,7 +8,7 @@
 Empurravel::Empurravel(Event& associated) : Action(associated){}
 Empurravel::~Empurravel(){}
 void Empurravel::Execute(){
-	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	State tstate = Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 
 	em->RemoveEvent("Caranguejo");

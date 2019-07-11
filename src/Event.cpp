@@ -1,7 +1,6 @@
 #include "../include/Event.h"
 #include "../include/Game.h"
 #include "../include/State.h"
-#include "../include/TestState.h"
 #include "../include/Camera.h"
 #include "../include/InputManager.h"
 #include "../include/Collider.h"
@@ -140,13 +139,13 @@ void Event::Move(int direcao, int velocidade){
 	}
 }
 bool Event::VaiColidir(int x, int y){
-	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	State tstate = Game::GetInstance().GetCurrentState();
 	CollisionMap* cm = (CollisionMap*) tstate.GetCollisionMap().GetComponent("CollisionMap");
 	return cm->At(x,y,0) == 1 || cm->At(x,y,1) == 1;
 }
 void Event::Render(){
 	if(tileNumber>=0){
-		TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+		State tstate = Game::GetInstance().GetCurrentState();
 		TileSet ts = tstate.GetTileSet();
 		ts.RenderTile(tileNumber, associated.box.x, associated.box.y);
 	}

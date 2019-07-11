@@ -20,15 +20,8 @@ public:
 	void Start();
 	void Pause();
 	void Resume();
-
-	TileSet& GetTileSet();
-	GameObject& GetCollisionMap();
-	GameObject& GetEventMap();
 private:
 	GameObject* bg;
-	GameObject* tm;
-	GameObject* cm;
-	GameObject* em;
 	GameObject* cecilia;
 	GameObject* crab;
 	TileSet* ts;

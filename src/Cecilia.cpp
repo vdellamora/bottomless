@@ -1,7 +1,6 @@
 #include "../include/Cecilia.h"
 #include "../include/Game.h"
 #include "../include/State.h"
-#include "../include/TestState.h"
 #include "../include/Camera.h"
 #include "../include/InputManager.h"
 #include "../include/Collider.h"
@@ -26,9 +25,9 @@ Cecilia::Cecilia(GameObject& associated) : Component(associated){
 }
 void Cecilia::Move(int direcao){
 	int queroX, queroY; std::string spriteNovo; bool flipa;
-	if(direcao == 1){ queroX = grid.x;   queroY = grid.y-1; spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = ((Sprite*)associated.GetComponent("Sprite"))->GetFlip();}
+	if(direcao == 1){ queroX = grid.x;   queroY = grid.y-1; spriteNovo = "assets/img/CeciliaWalkUp.png"; 	flipa = false;}
 	if(direcao == 2){ queroX = grid.x+1; queroY = grid.y;   spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = false;}
-	if(direcao == 3){ queroX = grid.x;   queroY = grid.y+1; spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = ((Sprite*)associated.GetComponent("Sprite"))->GetFlip();}
+	if(direcao == 3){ queroX = grid.x;   queroY = grid.y+1; spriteNovo = "assets/img/CeciliaWalkDown.png"; 	flipa = false;}
 	if(direcao == 4){ queroX = grid.x-1; queroY = grid.y;   spriteNovo = "assets/img/CeciliaWalkRight.png"; flipa = true;}
 
 	this->direcao = direcao;
@@ -192,7 +191,7 @@ bool Cecilia::VaiColidir(int x, int y){
 	return retorno;
 }
 void Cecilia::VaiInteragir(int x, int y){
-	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	State tstate = Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	Event* e = em->At(x,y);
 	if(e->vazio) return;
@@ -210,7 +209,7 @@ void Cecilia::AddSound(int id){
 	if(bancoDeSons.find(id) != bancoDeSons.end()) bancoDeSons.insert(id);
 }
 void Cecilia::TocarSom(){
-	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	State tstate = Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	// Usar o EventMap pra tocar todos os Ouvir() dos eventos
 	switch(audioSelecionado){

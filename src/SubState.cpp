@@ -67,10 +67,10 @@ void SubState::LoadAssets(){
   Camera::Follow(cecilia);
 	objectArray.emplace_back(cecilia);
 
-  if(!__MACOSX__){
-    music.Open("assets/audio/fundo.mp3");
-    music.Play();
-  }
+  // if(!__APPLE__){
+  //   music.Open("assets/audio/fundo.mp3");
+  //   music.Play();
+  // }
 }
 void SubState::Update(float dt){
 	// TRACE("SubStateUpdate");

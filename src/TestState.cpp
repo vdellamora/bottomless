@@ -37,13 +37,13 @@ TestState::TestState() : State(){
 	tm->box.x = 0;
 	tm->box.y = 0;
 	tm->AddComponent(new TileMap(*tm, 
-		"assets/map/tileMap.txt", 
+		"assets/map/ocean_Map.txt", 
 		ts));
 	objectArray.emplace_back(tm);
 
 	cm = new GameObject();
 	CollisionMap* cmap = new CollisionMap(*cm, 
-		"assets/map/tileMap_col.txt");
+		"assets/map/ocean_Col.txt");
 	cm->AddComponent(cmap);
 	objectArray.emplace_back(cm);
 
@@ -196,9 +196,6 @@ void TestState::Render(){
 	// TileMap* topo = (TileMap *) tm->GetComponent("TileMap");
 	// topo->Render(1);
 }
-TileSet& TestState::GetTileSet(){return *ts;}
-GameObject& TestState::GetCollisionMap(){return *cm;}
-GameObject& TestState::GetEventMap(){return *em;}
 TestState::~TestState(){objectArray.clear();}
 void TestState::Pause(){}
 void TestState::Resume(){}

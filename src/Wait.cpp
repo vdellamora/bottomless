@@ -1,6 +1,6 @@
 #include "../include/Wait.h"
 #include "../include/Game.h"
-#include "../include/TestState.h"
+#include "../include/State.h"
 #include "../include/EventMap.h"
 #include "../include/Event.h"
 #include "../include/Cecilia.h"
@@ -8,7 +8,7 @@
 Wait::Wait(Event& associated, float miliseconds) : Action(associated){
 	this->miliseconds = miliseconds;
 	this->start = false;
-	TestState tstate = (TestState&) Game::GetInstance().GetCurrentState();
+	State tstate = Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	Event* e = em->GetEvent(associated.GetIdentifier());
 
