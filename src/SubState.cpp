@@ -27,7 +27,7 @@
 SubState::SubState() : State(){
 	started = false;
 
-	bg = new GameObject();
+  GameObject* bg = new GameObject();
   bg->AddComponent(new Sprite(*bg, "assets/img/preto_script.png"));
   bg->AddComponent(new CameraFollower(*bg));
   GameObject* bg2 = new GameObject();
@@ -188,7 +188,7 @@ void SubState::Update(float dt){
 
 }
 void SubState::Render(){
-	bg->GetComponent("Sprite")->Render();
+	// bg->GetComponent("Sprite")->Render();
 	for(int i = 0; i < objectArray.size(); i++){
 		// TRACE("render: " + i);
 		objectArray[i].get()->Render();
