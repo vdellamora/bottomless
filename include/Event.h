@@ -43,6 +43,7 @@ public:
 	Vec2 GetGrid();
 	void SetSolido(bool);
 	bool GetSolido();
+	void SetType(int);
 	int GetType();
 	void SetSomPedido(int);
 	int GetSomPedido();

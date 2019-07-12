@@ -11,11 +11,15 @@ SaiDoCaminho::~SaiDoCaminho(){}
 void SaiDoCaminho::Execute(){
 	started = true;
 
-	State tstate = Game::GetInstance().GetCurrentState();
-	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
+	if(Game::VAR_GLOBAL[0]){
+		State tstate = Game::GetInstance().GetCurrentState();
+		EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 
-	// associated.Move(1, 0);
-	em->GetEvent("AguaViva")->ClearActions();
+		TRACE("Move, desgraça");
+		associated.Move(1, 4);
+		// em->GetEvent("AguaViva")->ClearActions();
+		em->GetEvent("AguaViva")->SetType(-1);
+	}
 
 	done = true;
 }

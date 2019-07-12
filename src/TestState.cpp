@@ -96,7 +96,7 @@ void TestState::LoadAssets(){
 
 	emap->AddEvent("AguaViva",18,6,2,true, "assets/img/aguaviva.png",10);
   	emap->GetEvent("AguaViva")->SetSomPedido(4);
- emap->GetEvent("AguaViva")->NewAction(new SaiDoCaminho(*(emap->GetEvent("AguaViva"))));
+ 	emap->GetEvent("AguaViva")->NewAction(new SaiDoCaminho(*(emap->GetEvent("AguaViva"))));
 
 	objectArray.emplace_back(em);
 

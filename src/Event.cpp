@@ -97,6 +97,7 @@ bool Event::GetParouMovimento(){return (!andando && parou);}
 Vec2 Event::GetGrid(){ return grid; }
 void Event::SetSolido(bool s){solido = s;}
 bool Event::GetSolido(){ return solido; }
+void Event::SetType(int t){type = t;}
 int Event::GetType(){ return this->type; }
 void Event::SetIdentifier(std::string id){identifier = id;}
 std::string Event::GetIdentifier(){ return identifier; }
@@ -133,8 +134,8 @@ void Event::Update(float dt){
 
 	if(executando){
 		// if(eventoAtual != listaAcoes.end()){
-	    TRACEN("executando ");
-	    TRACE(identifier);    
+	    // TRACEN("executando ");
+	    // TRACE(identifier);    
 		if(eventoAtual < listaAcoes.size()){
 			
 			if(listaAcoes[eventoAtual]->GetStarted()){

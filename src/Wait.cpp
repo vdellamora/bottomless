@@ -21,7 +21,7 @@ void Wait::Execute(){
 	if(!started){ t->Restart(); started = true;}
 }
 void Wait::Update(float dt){
-  TRACE("Esperando");
+  // TRACE("Esperando");
 	if(started) t->Update(dt);
 	if(t->Get() >= seconds) done = true;
 }

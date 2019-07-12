@@ -46,9 +46,9 @@ void EventMap::RemoveEvent(std::string evento){
 	}
 }
 void EventMap::OuvirEventos(int som){
-	TRACE("Ouvindo eventos");
+	// TRACE("Ouvindo eventos");
 	for(int i = 0; i<eventMatrix.size(); i++){
-		TRACEN("Evento do tipo: "); TRACE(std::to_string(eventMatrix[i]->GetType()));
+		// TRACEN("Evento do tipo: "); TRACE(std::to_string(eventMatrix[i]->GetType()));
 		if(eventMatrix[i]->GetType()==2){ TRACE("evento vai ouvir"); eventMatrix[i]->Execute(som);}
 	}
 }
