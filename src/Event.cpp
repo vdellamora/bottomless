@@ -14,6 +14,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
 	somPedido = 0;		spr = nullptr;
+  executando = false;
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
@@ -24,6 +25,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
 	somPedido = 0;
+  executando = false;
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
@@ -36,6 +38,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
 	somPedido = 0;		spr = nullptr;
+  executando = false;
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
@@ -49,7 +52,7 @@ void Event::NewAction(Action* a){
 }
 bool Event::GetExecutando(){return executando;}
 void Event::Execute(){
-	eventoAtual = listaAcoes.begin();
+	eventoAtual = 0;
 	executando = true;
 }
 void Event::Execute(int som){
@@ -111,21 +114,22 @@ void Event::Update(float dt){
 	}
 
 	if(executando){
-		if(eventoAtual != listaAcoes.end()){
+		if(eventoAtual < listaAcoes.size()){
 			
-			if((*eventoAtual)->GetStarted()){
-				if((*eventoAtual)->GetDone()){
+			if(listaAcoes[eventoAtual]->GetStarted()){
+				if((listaAcoes[eventoAtual])->GetDone()){
 				eventoAtual++;
 				} else {
-					(*eventoAtual)->Update(dt);
+					(listaAcoes[eventoAtual])->Update(dt);
 				}
 			} else {
-				(*eventoAtual)->Execute();
+				(listaAcoes[eventoAtual])->Execute();
 			}
 			
 		} else {
 			executando = false;
-		}
+      for (auto a:listaAcoes) a->Reset();
+    }
 	}
 
 	if(spr != nullptr) spr->Update(dt);

@@ -177,10 +177,9 @@ bool Cecilia::VaiColidir(int x, int y){
       }
     } else if(e->GetSolido()) return true;
   }
-  TRACE("opa");
   //se em alguma camada tiver colisão, seta como true;
   for (int i = 0; i < cm->GetDepth(); i++){
-    if(cm->At(x, y, i) == 1) {
+    if(cm->At(x, y, i) > 0) {
       retorno = true;
       break;
     }

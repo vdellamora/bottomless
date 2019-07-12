@@ -54,7 +54,7 @@ private:
 	int somPedido;
 	bool executando;
 	// auto eventoAtual;
-	std::vector<Action*>::iterator eventoAtual;
+	int eventoAtual;
 
 	std::string identifier;
 	int tileNumber;
