@@ -8,7 +8,10 @@
 #include "../include/TileSet.h"
 #include "../include/Sound.h"
 
-Event::Event(GameObject& associated):Component(associated){vazio = true;}
+Event::Event(GameObject& associated):Component(associated){
+  vazio = true;
+  next = nullptr;
+}
 Event::Event(GameObject& associated, std::string identifier, int type, bool solido) : Component(associated){
 	andando = false;	parou = true;
 	direcao = 0;		caminho = 0;
@@ -19,6 +22,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	this->type = type;
 	this->solido = solido;
 	associated.AddComponent(new Collider(associated));
+  next = nullptr;
 }
 Event::Event(GameObject& associated, std::string identifier, int type, bool solido, std::string file, int frames) : Component(associated){
 	andando = false;	parou = true;
@@ -32,6 +36,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	spr = new Sprite(associated, file.c_str(), frames, EVENT_IDLE_SPEED);
 	associated.AddComponent(spr);
 	associated.AddComponent(new Collider(associated));
+  next = nullptr;
 }
 Event::Event(GameObject& associated, std::string identifier, int type, bool solido, int tileN) : Component(associated){
 	andando = false;	parou = true;
@@ -46,6 +51,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	// spr = new Sprite(associated, file.c_str());
 	// associated.AddComponent(spr);
 	// associated.AddComponent(new Collider(associated));
+  next = nullptr;
 }
 void Event::NewAction(Action* a){
 	listaAcoes.push_back(a);
@@ -59,6 +65,11 @@ void Event::Execute(){
 	// eventoAtual = listaAcoes.begin();
 	eventoAtual = 0;
 	executando = true;
+  TRACE(this->identifier);
+  
+}
+void Event::SetNext(Event* n){
+  this->next = n;
 }
 void Event::Execute(int som){
 	TRACEN("som pedido: "); TRACE(TST(somPedido));
@@ -122,6 +133,8 @@ void Event::Update(float dt){
 
 	if(executando){
 		// if(eventoAtual != listaAcoes.end()){
+	    TRACEN("executando ");
+	    TRACE(identifier);    
 		if(eventoAtual < listaAcoes.size()){
 			
 			if(listaAcoes[eventoAtual]->GetStarted()){
@@ -136,8 +149,18 @@ void Event::Update(float dt){
 			
 		} else {
 			executando = false;
-      		for (auto a:listaAcoes) a->Reset();
-    	}
+    	  	if (identifier == "corneta1"){
+    	  	  TRACE(SDL_GetTicks());
+    	  	}
+    	  	if (identifier == "corneta2"){
+    	  	  TRACE(SDL_GetTicks());
+    	  	  TRACE("Gambirra");
+    	  	}
+    	  	for (auto a:listaAcoes) a->Reset();
+    	  	if (next != nullptr ) next->Execute();
+    	  	TRACEN("Executou ");
+    	  	TRACE(identifier);
+	    }
 	}
 
 	if(spr != nullptr) spr->Update(dt);

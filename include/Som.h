@@ -11,14 +11,16 @@ class Event;
 class Som : public Action{
 
 public:
-	Som(Event&, int);
+	Som(Event&, int, float wait = -1);
 	~Som();
 	void Execute();
 	bool GetDone();
 	bool Is(std::string);
+  void ChannelFinished(int channel);
 private:
 	Sound* s;
 	int id;
+  int channel;
 };
 
 #endif //C_SOM

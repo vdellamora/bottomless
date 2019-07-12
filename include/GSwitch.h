@@ -11,7 +11,7 @@ class Event;
 class GSwitch : public Action{
 
 public:
-	GSwitch(Event&, int, bool);
+	GSwitch(Event&, int, bool, float wait = -1);
 	~GSwitch();
 	void Execute();
 	bool GetDone();

@@ -76,28 +76,26 @@ void TestState::LoadAssets(){
 	emap->GetEvent("CaranguejoOuvido")->SetSomPedido(1);
 	emap->GetEvent("CaranguejoOuvido")->NewAction(new Empurravel(*(emap->GetEvent("CaranguejoOuvido"))));
 
-  	emap->AddEvent("corneta1",13,5,-1,true,31);
-	emap->GetEvent("corneta1")->NewAction(new Som(*(emap->GetEvent("corneta1")), 2));
-	emap->GetEvent("corneta1")->NewAction(new Wait(*(emap->GetEvent("corneta1")), 2000));
+  emap->AddEvent("corneta1",13,5,-1,true,31);
+  emap->GetEvent("corneta1")->NewAction(new Som(*(emap->GetEvent("corneta1")), 2));
 
-  	emap->AddEvent("corneta2",15,5,-1,true,31);
-  	emap->GetEvent("corneta2")->NewAction(new Wait(*(emap->GetEvent("corneta2")), 2000));
-  	emap->GetEvent("corneta2")->NewAction(new Som(*(emap->GetEvent("corneta2")), 3));
-   	emap->GetEvent("corneta2")->NewAction(new Wait(*(emap->GetEvent("corneta2")), 2000));
+  emap->AddEvent("corneta2",15,5,-1,true,31);
+  emap->GetEvent("corneta2")->NewAction(new Wait(*(emap->GetEvent("corneta2")), 2));
+  emap->GetEvent("corneta2")->NewAction(new Som(*(emap->GetEvent("corneta2")), 3));
 
-	emap->AddEvent("corneta3",17,5,-1,true,30);
-	emap->GetEvent("corneta3")->NewAction(new Wait(*(emap->GetEvent("corneta3")), 4000));
-	emap->GetEvent("corneta3")->NewAction(new GSwitch(*(emap->GetEvent("corneta3")), 0, true));
-	emap->GetEvent("corneta3")->NewAction(new Som(*(emap->GetEvent("corneta3")), 5));
-	emap->GetEvent("corneta3")->NewAction(new Wait(*(emap->GetEvent("corneta3")), 1000));
-	emap->GetEvent("corneta3")->NewAction(new GSwitch(*(emap->GetEvent("corneta3")), 0, false));
+  emap->AddEvent("corneta3",17,5,-1,true,30);
+  emap->GetEvent("corneta3")->NewAction(new Wait(*(emap->GetEvent("corneta3")), 4));
+  emap->GetEvent("corneta3")->NewAction(new GSwitch(*(emap->GetEvent("corneta3")), 0, true));
+  emap->GetEvent("corneta3")->NewAction(new Som(*(emap->GetEvent("corneta3")), 5));
+  emap->GetEvent("corneta3")->NewAction(new Wait(*(emap->GetEvent("corneta3")), 1));
+  emap->GetEvent("corneta3")->NewAction(new GSwitch(*(emap->GetEvent("corneta3")), 0, false));
 
 	emap->AddEvent("alavanca",11,4,1,true,23);
 	emap->GetEvent("alavanca")->NewAction(new Alavanca(*(emap->GetEvent("alavanca"))));
 
 	emap->AddEvent("AguaViva",18,6,2,true, "assets/img/aguaviva.png",10);
-	emap->GetEvent("AguaViva")->SetSomPedido(1);
-  	// emap->GetEvent("AguaViva")->NewAction(new Empurravel(*(emap->GetEvent("AguaViva"))));
+  	emap->GetEvent("AguaViva")->SetSomPedido(4);
+//  emap->GetEvent("AguaViva")->NewAction(new Empurravel(*(emap->GetEvent("AguaViva"))));
 
 	objectArray.emplace_back(em);
 
@@ -145,9 +143,9 @@ void TestState::Update(float dt){
 			emap->GetEvent("Golfinho3")->NewAction(new Som(*(emap->GetEvent("Golfinho3")), 4));
 			TRACE("ADICIONA GOLFINHOS");
 
-	//      emap->GetEvent("Golfinho1")->Execute();
-	//      emap->GetEvent("Golfinho2")->Execute();
-	//      emap->GetEvent("Golfinho3")->Execute();
+	      emap->GetEvent("Golfinho1")->Execute();
+	      emap->GetEvent("Golfinho2")->Execute();
+	      emap->GetEvent("Golfinho3")->Execute();
 		}
 	}
 

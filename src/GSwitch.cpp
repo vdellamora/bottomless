@@ -2,14 +2,17 @@
 #include "../include/Game.h"
 #include "../include/Event.h"
 
-GSwitch::GSwitch(Event& associated, int pos, bool value) : Action(associated){
+GSwitch::GSwitch(Event& associated, int pos, bool value, float wait) : Action(associated, wait){
 	this->pos = pos;
 	this->value = value;
 }
-GSwitch::~GSwitch(){}
-void GSwitch::Execute(){
-	Game::VAR_GLOBAL[pos] = value;
-	done = true;
+GSwitch::~GSwitch(){
+  if(t) delete t;
 }
-bool GSwitch::GetDone(){return done;}
+void GSwitch::Execute(){
+  started = true;
+	Game::VAR_GLOBAL[pos] = value;
+  if (t == nullptr) done = true;
+}
+bool GSwitch::GetDone(){ return done; }
 bool GSwitch::Is(std::string type){return type == "GSwitch";}

@@ -18,7 +18,7 @@ public:
 	void Update(float);
 	bool Is(std::string);
 private:
-	float miliseconds;
+	float seconds;
 	Timer* t;
 };
 
