@@ -16,6 +16,7 @@ public:
 	virtual bool GetDone();
 	virtual void Update(float);
 	virtual bool Is(std::string) = 0;
+  void Reset();
 protected:
 	Event& associated;
 	bool started;

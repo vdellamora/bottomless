@@ -49,7 +49,8 @@ void Event::NewAction(Action* a){
 }
 bool Event::GetExecutando(){return executando;}
 void Event::Execute(){
-	eventoAtual = listaAcoes.begin();
+	// eventoAtual = listaAcoes.begin();
+	eventoAtual = 0;
 	executando = true;
 }
 void Event::Execute(int som){
@@ -111,16 +112,17 @@ void Event::Update(float dt){
 	}
 
 	if(executando){
-		if(eventoAtual != listaAcoes.end()){
+		// if(eventoAtual != listaAcoes.end()){
+		if(eventoAtual < listaAcoes.size()){
 			
-			if((*eventoAtual)->GetStarted()){
-				if((*eventoAtual)->GetDone()){
+			if(listaAcoes[eventoAtual]->GetStarted()){
+				if(listaAcoes[eventoAtual]->GetDone()){
 				eventoAtual++;
 				} else {
-					(*eventoAtual)->Update(dt);
+					listaAcoes[eventoAtual]->Update(dt);
 				}
 			} else {
-				(*eventoAtual)->Execute();
+				listaAcoes[eventoAtual]->Execute();
 			}
 			
 		} else {
