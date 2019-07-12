@@ -20,16 +20,16 @@ Som::Som(Event& associated, int s, float wait) : Action(associated){
 			this->s = new Sound(e->GetAssociated(), "assets/audio/boom.wav");
 			break;
 		case 2:
-			this->s = new Sound(e->GetAssociated(), "assets/audio/boom.wav");
+			this->s = new Sound(e->GetAssociated(), "assets/audio/Shot1.wav");
 			break;
 		case 3:
-			this->s = new Sound(e->GetAssociated(), "assets/audio/boom.wav");
+			this->s = new Sound(e->GetAssociated(), "assets/audio/Shot2.wav");
 			break;
 		case 4:
-			this->s = new Sound(e->GetAssociated(), "assets/audio/boom.wav");
+			this->s = new Sound(e->GetAssociated(), "assets/audio/Shot3.wav");
 			break;
 		case 5:
-			this->s = new Sound(e->GetAssociated(), "assets/audio/boom.wav");
+			this->s = new Sound(e->GetAssociated(), "assets/audio/Failure1.wav");
 			break;
 	}
 }
