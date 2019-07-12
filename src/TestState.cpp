@@ -76,6 +76,7 @@ void TestState::LoadAssets(){
 	emap->GetEvent("Caranguejo")->NewAction(new Dano(*(emap->GetEvent("Caranguejo")), 34));
 	emap->GetEvent("CaranguejoOuvido")->SetSomPedido(1);
 	emap->GetEvent("CaranguejoOuvido")->NewAction(new Empurravel(*(emap->GetEvent("CaranguejoOuvido"))));
+    emap->GetEvent("Caranguejo")->NewAction(new RevertCarang(*(emap->GetEvent("Caranguejo"))));
 
   emap->AddEvent("corneta1",13,5,-1,true,31);
   emap->GetEvent("corneta1")->NewAction(new Som(*(emap->GetEvent("corneta1")), 2));

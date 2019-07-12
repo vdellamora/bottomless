@@ -7,6 +7,7 @@
 Sprite::Sprite(GameObject& go) : Component(go) {
 	texture = nullptr;	angleDeg = 0;
 	scale.x = 1.0f; scale.y = 1.0f;
+    loops = true;
 }
 Sprite::Sprite(GameObject& go, std::string file, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(go){
 	// TRACE("Sprite::Sprite");
@@ -16,6 +17,7 @@ void Sprite::NewSprite(std::string file, int frameCount, float frameTime, float 
 	flip = false;
 	this->frameCount = frameCount;
 	this->frameTime = frameTime;
+    this->currentFrame = 0;
 	this->secondsToSelfDestruct = secondsToSelfDestruct;
 	selfDestructCount = Timer();
 	texture = nullptr;	angleDeg = 0;
@@ -41,7 +43,11 @@ void Sprite::Update(float dt){
 		if(selfDestructCount.Get() > secondsToSelfDestruct) associated.RequestDelete();
 	}
 	if ((timeElapsed += dt) >= frameTime){
-		if(++currentFrame >= frameCount) currentFrame = 0;
+		if(++currentFrame >= frameCount)
+            if (loops) currentFrame = 0;
+            else currentFrame = frameCount-1;
+        
+        
 		SetFrame(currentFrame);
 		timeElapsed = 0;
 	}
@@ -84,3 +90,10 @@ Vec2 Sprite::GetScale(){ return scale; }
 bool Sprite::IsOpen(){ return (texture != nullptr); }
 bool Sprite::Is(std::string type){ return type=="Sprite"; }
 Sprite::~Sprite(){ /*TRACE("Sprite::Destrutor");*/ }
+void Sprite::SetLoops(bool loop){
+    loops = loop;
+}
+bool Sprite::Finished(){
+    return loops ? false : (currentFrame >= frameCount-1);
+}
+

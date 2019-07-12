@@ -31,8 +31,11 @@ public:
 	Vec2 GetScale();
 	bool Is(std::string);
 	bool IsOpen();
+    void SetLoops(bool loop);
 	float angleDeg;
+    bool Finished();
 private:
+    bool loops;
 	std::shared_ptr<SDL_Texture> texture;
 	int frameCount;
 	int currentFrame;
