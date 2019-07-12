@@ -8,6 +8,7 @@
 Empurravel::Empurravel(Event& associated) : Action(associated){}
 Empurravel::~Empurravel(){}
 void Empurravel::Execute(){
+	started = true;
 	State tstate = Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 
@@ -21,5 +22,4 @@ void Empurravel::Execute(){
 
 	done = true;
 }
-bool Empurravel::GetDone(){ return done;}
 bool Empurravel::Is(std::string type){return type == "Empurravel";}

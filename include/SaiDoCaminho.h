@@ -1,5 +1,5 @@
-#ifndef C_EMPURRAVEL
-#define C_EMPURRAVEL
+#ifndef C_SAIDOCAMINHO
+#define C_SAIDOCAMINHO
 
 #include "inclusao.h"
 #include "Event.h"
@@ -8,14 +8,14 @@
 #include <iostream>
 
 class Event;
-class Empurravel : public Action{
+class SaiDoCaminho : public Action{
 
 public:
-	Empurravel(Event&);
-	~Empurravel();
+	SaiDoCaminho(Event&);
+	~SaiDoCaminho();
 	void Execute();
 	bool Is(std::string);
 private:
 };
 
-#endif //C_EMPURRAVEL
+#endif //C_SAIDOCAMINHO

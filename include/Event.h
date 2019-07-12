@@ -11,7 +11,7 @@
 #include <queue>
 #include "Timer.h"
 
-#define EVENT_TILE_SIZE 96
+#define EVENT_TILE_SIZE 64
 #define EVENT_IDLE_SPEED 0.2f
 
 class GameObject;

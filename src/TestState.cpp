@@ -12,6 +12,7 @@
 #include "../include/Move.h"
 #include "../include/Dano.h"
 #include "../include/Empurravel.h"
+#include "../include/SaiDoCaminho.h"
 #include "../include/Som.h"
 #include "../include/Wait.h"
 #include "../include/Alavanca.h"
@@ -32,18 +33,18 @@ TestState::TestState() : State(){
   	bg->AddComponent(new CameraFollower(*bg));
   	objectArray.emplace_back(bg);
 
-	// ts = new TileSet(64, 64, "assets/img/TileSubmarino.png");
-	ts = new TileSet(96, 96, "assets/img/oceanTileSet.png");
+	ts = new TileSet(64, 64, "assets/img/TileSubmarino.png");
+	// ts = new TileSet(96, 96, "assets/img/oceanTileSet.png");
 	tm = new GameObject();
 	tm->box.x = 0;
 	tm->box.y = 0;
-	// tm->AddComponent(new TileMap(*tm, "assets/map/ocean_Map.txt", ts));
-	tm->AddComponent(new TileMap(*tm, "assets/map/ocean1_Map.txt", ts));
+	tm->AddComponent(new TileMap(*tm, "assets/map/ocean_Map.txt", ts));
+	// tm->AddComponent(new TileMap(*tm, "assets/map/ocean1_Map.txt", ts));
 	objectArray.emplace_back(tm);
 
 	cm = new GameObject();
-	// CollisionMap* cmap = new CollisionMap(*cm, "assets/map/ocean_Col.txt");
-	CollisionMap* cmap = new CollisionMap(*cm, "assets/map/ocean1_Col.txt");
+	CollisionMap* cmap = new CollisionMap(*cm, "assets/map/ocean_Col.txt");
+	// CollisionMap* cmap = new CollisionMap(*cm, "assets/map/ocean1_Col.txt");
 	cm->AddComponent(cmap);
 	objectArray.emplace_back(cm);
 	
@@ -95,7 +96,7 @@ void TestState::LoadAssets(){
 
 	emap->AddEvent("AguaViva",18,6,2,true, "assets/img/aguaviva.png",10);
   	emap->GetEvent("AguaViva")->SetSomPedido(4);
-//  emap->GetEvent("AguaViva")->NewAction(new Empurravel(*(emap->GetEvent("AguaViva"))));
+ emap->GetEvent("AguaViva")->NewAction(new SaiDoCaminho(*(emap->GetEvent("AguaViva"))));
 
 	objectArray.emplace_back(em);
 
@@ -103,7 +104,7 @@ void TestState::LoadAssets(){
 	Cecilia* comp_c = new Cecilia(*cecilia);
 	cecilia->AddComponent(comp_c);
 	comp_c->SetGrid(1,7);
-	Camera::Follow(cecilia);
+	// Camera::Follow(cecilia);
 	objectArray.emplace_back(cecilia);
 
 	music.Open("assets/audio/fundo.mp3");
