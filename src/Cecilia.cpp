@@ -11,17 +11,17 @@
 Cecilia *Cecilia::player = nullptr;
 
 Cecilia::Cecilia(GameObject& associated) : Component(associated){
-    gravando = false;	 bancoDeSons.insert(1);
-    andando = false;	 parou = true;
-    direcao = 2;		 caminho = 0;
-    direcaoAnterior = 2; hp = 100;
-    audioSelecionado = 1;
-    eventoPraExecutar = new Event(associated);
-    spr = new Sprite(associated, "assets/img/CeciliaIdle.png", 11, CECILIA_IDLE_SPEED);
-    spr->SetFlip(true);
-    associated.AddComponent(spr);
-    associated.AddComponent(new Collider(associated));
-    Cecilia::player = this;
+	gravando = false;	 bancoDeSons.insert(1);
+	andando = false;	 parou = true;
+	direcao = 2;		 caminho = 0;
+	direcaoAnterior = 2; hp = 100; danoo = false;
+	audioSelecionado = 1;
+	eventoPraExecutar = new Event(associated);
+	spr = new Sprite(associated, "assets/img/CeciliaIdle.png", 11, CECILIA_IDLE_SPEED);
+	spr->SetFlip(true);
+	associated.AddComponent(spr);
+	associated.AddComponent(new Collider(associated));
+	Cecilia::player = this;
 }
 void Cecilia::Move(int direcao){
     int queroX, queroY; std::string spriteNovo; bool flipa;
@@ -155,11 +155,18 @@ void Cecilia::Update(float dt){
         }
     }
     
+    if(danoo && GetParouMovimento()){
+        //piscar
+        //jogar pra trás
+        Move((direcao+2)%5+1);
+        danoo = false;
+    }
     ////////////////////////////////////
     if(hp<=0){
         Camera::Unfollow();
         associated.RequestDelete();
     }
+
 }
 bool Cecilia::VaiColidir(int x, int y){
     bool retorno = false;
@@ -239,10 +246,8 @@ void Cecilia::TocarSom(){
     if (!som->IsPlaying()) som->Play(); // se não estiver tocando, toca.
 }
 void Cecilia::InfligirDano(int dano){
-    hp -= dano;
-    //piscar
-    //jogar pra trás
-    Move((direcao+2)%4+1);
+	hp -= dano;
+	danoo = true;
 }
 
 bool Cecilia::GetGravando(){return gravando;}

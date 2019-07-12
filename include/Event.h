@@ -11,6 +11,7 @@
 #include <queue>
 #include "Timer.h"
 
+#define EVENT_TILE_SIZE 96
 #define EVENT_IDLE_SPEED 0.2f
 
 class GameObject;
@@ -30,6 +31,7 @@ public:
 	void NotifyCollision(GameObject&);
 
 	void NewAction(Action*);
+	void ClearActions();
 	bool GetExecutando();
 	void Execute();
 	void Execute(int);
@@ -39,11 +41,13 @@ public:
 	bool VaiColidir(int, int);
 	void SetGrid(int, int);
 	Vec2 GetGrid();
+	void SetSolido(bool);
 	bool GetSolido();
 	int GetType();
 	void SetSomPedido(int);
 	int GetSomPedido();
 
+	void SetIdentifier(std::string);
 	std::string GetIdentifier();
 	GameObject& GetAssociated();
 	bool vazio;
@@ -55,8 +59,8 @@ private:
 	int type;
 	int somPedido;
 	bool executando;
-	// auto eventoAtual;
 	int eventoAtual;
+	// std::vector<Action*>::iterator eventoAtual;
 
 	std::string identifier;
 	int tileNumber;
