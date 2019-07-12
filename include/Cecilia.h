@@ -9,7 +9,7 @@
 #include <iostream>
 #include <memory>
 #include <set>
-#define CECILIA_TILE_SIZE 64
+#define CECILIA_TILE_SIZE 96
 #define CECILIA_MOVE_SPEED 4
 #define CECILIA_IDLE_SPEED 0.2f
 #define CECILIA_ANIMATION_SPEED 0.0908f
@@ -55,6 +55,7 @@ private:
 	bool parou;
 
 	int hp;
+	bool danoo;
 	int audioSelecionado;
 	bool gravando;
 	std::set<int> bancoDeSons;

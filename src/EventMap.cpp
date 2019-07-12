@@ -63,7 +63,6 @@ void EventMap::Render(){
 	}
 }
 
-
 int EventMap::GetWidth(){ return mapWidth;}
 int EventMap::GetHeight(){ return mapHeight;}
 void EventMap::SetWidth(int width){this->mapWidth = width;}

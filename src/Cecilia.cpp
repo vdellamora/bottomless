@@ -14,7 +14,7 @@ Cecilia::Cecilia(GameObject& associated) : Component(associated){
 	gravando = false;	 bancoDeSons.insert(1);
 	andando = false;	 parou = true;
 	direcao = 2;		 caminho = 0;
-	direcaoAnterior = 2; hp = 100;
+	direcaoAnterior = 2; hp = 100; danoo = false;
 	audioSelecionado = 1;
 	eventoPraExecutar = new Event(associated);
 	spr = new Sprite(associated, "assets/img/CeciliaIdle.png", 11, CECILIA_IDLE_SPEED);
@@ -155,6 +155,13 @@ void Cecilia::Update(float dt){
 		}
 	}
 
+	if(danoo && GetParouMovimento()){
+		//piscar
+		//jogar pra trás
+		Move((direcao+2)%5+1);
+		danoo = false;
+	}
+
 	////////////////////////////////////
 	if(hp<=0){
 		Camera::Unfollow();
@@ -177,10 +184,9 @@ bool Cecilia::VaiColidir(int x, int y){
       }
     } else if(e->GetSolido()) return true;
   }
-  TRACE("opa");
   //se em alguma camada tiver colisão, seta como true;
   for (int i = 0; i < cm->GetDepth(); i++){
-    if(cm->At(x, y, i) == 1) {
+    if(cm->At(x, y, i) > 0) {
       retorno = true;
       break;
     }
@@ -222,9 +228,7 @@ void Cecilia::TocarSom(){
 }
 void Cecilia::InfligirDano(int dano){
 	hp -= dano;
-	//piscar
-	//jogar pra trás
-	Move((direcao+2)%4+1);
+	danoo = true;
 }
 
 bool Cecilia::GetGravando(){return gravando;}

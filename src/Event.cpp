@@ -14,6 +14,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
 	somPedido = 0;		spr = nullptr;
+  executando = false;
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
@@ -24,6 +25,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
 	somPedido = 0;
+  executando = false;
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
@@ -36,6 +38,7 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 	direcao = 0;		caminho = 0;
 	vazio = false;		velocidade = 0;
 	somPedido = 0;		spr = nullptr;
+  executando = false;
 	tileNumber = -1; this->identifier = identifier;
 	this->type = type;
 	this->solido = solido;
@@ -46,6 +49,10 @@ Event::Event(GameObject& associated, std::string identifier, int type, bool soli
 }
 void Event::NewAction(Action* a){
 	listaAcoes.push_back(a);
+}
+void Event::ClearActions(){
+	for (auto a:listaAcoes) delete a;
+	listaAcoes.clear();
 }
 bool Event::GetExecutando(){return executando;}
 void Event::Execute(){
@@ -69,16 +76,18 @@ void Event::SetGrid(int x, int y){
 	float ajustey = 0;
 	if(spr != nullptr){
 		ajustex = associated.box.w/4;
-		ajustey = associated.box.h/2;
+		ajustey = associated.box.h/4;
 	}
 
-	associated.box.x = 64*x - ajustex;// - associated.box.w/4;
-	associated.box.y = 64*y - ajustey;// - associated.box.h/2;
+	associated.box.x = EVENT_TILE_SIZE*x - ajustex;// - associated.box.w/4;
+	associated.box.y = EVENT_TILE_SIZE*y - ajustey;// - associated.box.h/2;
 }
 bool Event::GetParouMovimento(){return (!andando && parou);}
 Vec2 Event::GetGrid(){ return grid; }
+void Event::SetSolido(bool s){solido = s;}
 bool Event::GetSolido(){ return solido; }
 int Event::GetType(){ return this->type; }
+void Event::SetIdentifier(std::string id){identifier = id;}
 std::string Event::GetIdentifier(){ return identifier; }
 bool Event::Is(std::string type){ return type == "Event"; }
 Event::~Event(){listaAcoes.clear();}
@@ -86,7 +95,7 @@ void Event::Start(){}
 void Event::Update(float dt){
 	if(andando){
 		grid = Vec2(nx, ny);
-		if(caminho<64){
+		if(caminho<EVENT_TILE_SIZE){
 			switch(direcao){
 				case 1:
 					associated.box.y -= velocidade;
@@ -127,7 +136,8 @@ void Event::Update(float dt){
 			
 		} else {
 			executando = false;
-		}
+      		for (auto a:listaAcoes) a->Reset();
+    	}
 	}
 
 	if(spr != nullptr) spr->Update(dt);
@@ -156,7 +166,12 @@ void Event::Move(int direcao, int velocidade){
 bool Event::VaiColidir(int x, int y){
 	State tstate = Game::GetInstance().GetCurrentState();
 	CollisionMap* cm = (CollisionMap*) tstate.GetCollisionMap().GetComponent("CollisionMap");
-	return cm->At(x,y,0) == 1 || cm->At(x,y,1) == 1;
+	// return cm->At(x,y,0) == 1 || cm->At(x,y,1) == 1;
+	for (int i = 0; i < cm->GetDepth(); i++){
+    if(cm->At(x, y, i) == 1) {
+      return true;
+    }
+  }
 }
 void Event::Render(){
 	if(tileNumber>=0){

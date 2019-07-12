@@ -64,7 +64,7 @@ void SubState::LoadAssets(){
 	Cecilia* comp_c = new Cecilia(*cecilia);
 	cecilia->AddComponent(comp_c);
 	comp_c->SetGrid(8,14);
-  Camera::Follow(cecilia);
+    Camera::Follow(cecilia);
 	objectArray.emplace_back(cecilia);
 
   // if(!__APPLE__){

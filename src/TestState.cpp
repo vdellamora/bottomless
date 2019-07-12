@@ -32,15 +32,18 @@ TestState::TestState() : State(){
   	bg->AddComponent(new CameraFollower(*bg));
   	objectArray.emplace_back(bg);
 
-	ts = new TileSet(64, 64, "assets/img/TileSubmarino.png");
+	// ts = new TileSet(64, 64, "assets/img/TileSubmarino.png");
+	ts = new TileSet(96, 96, "assets/img/oceanTileSet.png");
 	tm = new GameObject();
 	tm->box.x = 0;
 	tm->box.y = 0;
-	tm->AddComponent(new TileMap(*tm, "assets/map/ocean_Map.txt", ts));
+	// tm->AddComponent(new TileMap(*tm, "assets/map/ocean_Map.txt", ts));
+	tm->AddComponent(new TileMap(*tm, "assets/map/ocean1_Map.txt", ts));
 	objectArray.emplace_back(tm);
 
 	cm = new GameObject();
-	CollisionMap* cmap = new CollisionMap(*cm, "assets/map/ocean_Col.txt");
+	// CollisionMap* cmap = new CollisionMap(*cm, "assets/map/ocean_Col.txt");
+	CollisionMap* cmap = new CollisionMap(*cm, "assets/map/ocean1_Col.txt");
 	cm->AddComponent(cmap);
 	objectArray.emplace_back(cm);
 	
@@ -92,7 +95,7 @@ void TestState::LoadAssets(){
 	emap->AddEvent("alavanca",11,4,1,true,23);
 	emap->GetEvent("alavanca")->NewAction(new Alavanca(*(emap->GetEvent("alavanca"))));
 
-	emap->AddEvent("AguaViva",18,6,2,true);
+	emap->AddEvent("AguaViva",18,6,2,true, "assets/img/aguaviva.png",10);
 	emap->GetEvent("AguaViva")->SetSomPedido(1);
   	// emap->GetEvent("AguaViva")->NewAction(new Empurravel(*(emap->GetEvent("AguaViva"))));
 
@@ -102,6 +105,7 @@ void TestState::LoadAssets(){
 	Cecilia* comp_c = new Cecilia(*cecilia);
 	cecilia->AddComponent(comp_c);
 	comp_c->SetGrid(1,7);
+	Camera::Follow(cecilia);
 	objectArray.emplace_back(cecilia);
 
 	music.Open("assets/audio/fundo.mp3");
@@ -118,17 +122,19 @@ void TestState::Update(float dt){
 	if(emap->GetEvent("Caranguejo") != nullptr){
 		if((emap->GetEvent("Caranguejo")->GetGrid().x == 10) && (emap->GetEvent("Caranguejo")->GetParouMovimento())){
 			
-			((TileMap*) tm->GetComponent("TileMap"))->AlteraTile(
-      		emap->GetEvent("Caranguejo")->GetGrid().x,
-		    emap->GetEvent("Caranguejo")->GetGrid().y, 1, 6);	// Altera o desenho do chão
+			emap->GetEvent("Caranguejo")->ClearActions();
+			emap->GetEvent("Caranguejo")->SetSolido(false);
+			TRACE("ALTERA CARANGUEJO");
 			((CollisionMap*) cm->GetComponent("CollisionMap"))->AlteraTile(
       		emap->GetEvent("Caranguejo")->GetGrid().x,
       		emap->GetEvent("Caranguejo")->GetGrid().y, 0, 0);	// Altera a colisão do chão
+			TRACE("ALTERA COLISAO");
 			
-			TRACE(TST(((CollisionMap*) cm->GetComponent("CollisionMap"))->At(
-      		emap->GetEvent("Caranguejo")->GetGrid().x,
-      		emap->GetEvent("Caranguejo")->GetGrid().y, 1)));
-			emap->RemoveEvent("Caranguejo");
+			// TRACE(TST(((CollisionMap*) cm->GetComponent("CollisionMap"))->At(
+   //    		emap->GetEvent("Caranguejo")->GetGrid().x,
+   //    		emap->GetEvent("Caranguejo")->GetGrid().y, 0)));
+			emap->GetEvent("Caranguejo")->SetIdentifier("CaranguejoDormindo");
+			TRACE("FINALIZA CARANGUEJO");
 
 
 			emap->AddEvent("Golfinho1",11,9,1,true,7);
@@ -137,6 +143,7 @@ void TestState::Update(float dt){
 			emap->GetEvent("Golfinho2")->NewAction(new Som(*(emap->GetEvent("Golfinho2")), 3));
 			emap->AddEvent("Golfinho3",13,9,1,true,7);
 			emap->GetEvent("Golfinho3")->NewAction(new Som(*(emap->GetEvent("Golfinho3")), 4));
+			TRACE("ADICIONA GOLFINHOS");
 
 	//      emap->GetEvent("Golfinho1")->Execute();
 	//      emap->GetEvent("Golfinho2")->Execute();

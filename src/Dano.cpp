@@ -7,6 +7,7 @@ Dano::Dano(Event& associated, int quantidade) : Action(associated){
 }
 Dano::~Dano(){}
 void Dano::Execute(){
+	started = true;
 	// Event* e = (Event*) associated.GetComponent("Event");
 	Cecilia::player->InfligirDano(quantidade);
 	done = true;
