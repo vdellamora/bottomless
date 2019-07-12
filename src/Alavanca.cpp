@@ -9,6 +9,7 @@ Alavanca::Alavanca(Event& associated) : Action(associated){
 }
 Alavanca::~Alavanca(){}
 void Alavanca::Execute(){
+  started = true;
   if (!done){
     State tstate = Game::GetInstance().GetCurrentState();
     EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");

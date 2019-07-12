@@ -2,10 +2,13 @@
 #include "../include/Game.h"
 #include "../include/TestState.h"
 #include "../include/SubState.h"
+#include "../include/Cecilia.h"
 
 // a simple channel_finished function
 void channelDone(int channel) {
-  printf("channel %d finished playback.\n",channel);
+  TRACE("channel " + TST(channel) + " finished playback.\n");
+  Game::GetInstance();
+//  Cecilia::player->
 }
 
 int main(int argc, char** argv){

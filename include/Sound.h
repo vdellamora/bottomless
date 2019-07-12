@@ -22,6 +22,7 @@ public:
 	bool IsPlaying();
 	bool IsOpen();
 	bool Is(std::string);
+  int GetChannel();
 private:
 	std::shared_ptr<Mix_Chunk> chunk;
 	int channel;

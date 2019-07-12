@@ -9,6 +9,7 @@
 #include <iostream>
 #include <memory>
 #include <queue>
+#include "Timer.h"
 
 #define EVENT_IDLE_SPEED 0.2f
 
@@ -32,7 +33,7 @@ public:
 	bool GetExecutando();
 	void Execute();
 	void Execute(int);
-
+  void SetNext(Event*);
 	void Move(int, int);
 	bool GetParouMovimento();
 	bool VaiColidir(int, int);
@@ -48,6 +49,7 @@ public:
 	bool vazio;
 
 private:
+  Event* next;
 	std::vector<Action*> listaAcoes;
 	enum EventType {PRESS, TOUCH, LISTEN};
 	int type;
@@ -68,6 +70,7 @@ private:
 	bool andando;
 	bool parou;
 	bool solido;
+  
 };
 
 #endif //C_EVENT

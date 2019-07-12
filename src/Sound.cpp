@@ -31,3 +31,4 @@ void Sound::Open(std::string file){
 bool Sound::IsOpen(){ return (chunk!=nullptr); }
 bool Sound::IsPlaying(){ return Mix_Playing(this->channel); }
 bool Sound::Is(std::string type){ return type == "Sound"; };
+int Sound::GetChannel(){ return channel; };

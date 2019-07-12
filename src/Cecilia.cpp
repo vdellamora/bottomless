@@ -205,19 +205,37 @@ void Cecilia::PrepararGravador(){
 }
 void Cecilia::AddSound(int id){
 	if(bancoDeSons.find(id) != bancoDeSons.end()) bancoDeSons.insert(id);
+  this->audioSelecionado = id;
+  TRACE("adicionou o som " + TST(id));
 }
 void Cecilia::TocarSom(){
 	State tstate = Game::GetInstance().GetCurrentState();
 	EventMap* em = (EventMap*) tstate.GetEventMap().GetComponent("EventMap");
 	// Usar o EventMap pra tocar todos os Ouvir() dos eventos
+  Sound* som = (Sound*) associated.GetComponent("Sound");
+  if (som == nullptr){
+    som = new Sound(associated, "assets/audio/boom.wav");
+    associated.AddComponent(som);
+  }
 	switch(audioSelecionado){
 		case 1:					// Caixa de música
-			Sound* som = new Sound(associated, "assets/audio/boom.wav");
-			associated.AddComponent(som);
-			em->OuvirEventos(audioSelecionado);
-			som->Play();
+      som->Open("assets/audio/boom.wav");
 			break;
+    case 2:
+      som->Open("assets/audio/boom.wav");
+      break;
+    case 3:
+      som->Open("assets/audio/boom.wav");
+      break;
+    case 4:
+      som->Open("assets/audio/boom.wav");
+      break;
+    default:
+      som->Open("assets/audio/boom.wav");
 	}
+  
+  em->OuvirEventos(audioSelecionado);
+  if (!som->IsPlaying()) som->Play(); // se não estiver tocando, toca.
 }
 void Cecilia::InfligirDano(int dano){
 	hp -= dano;

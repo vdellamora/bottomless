@@ -9,7 +9,7 @@ class Event;
 class Action{
 
 public:
-	Action(Event&);
+	Action(Event&, float wait = -1);
 	virtual ~Action();
 	virtual void Execute();
 	virtual bool GetStarted();
@@ -17,10 +17,12 @@ public:
 	virtual void Update(float);
 	virtual bool Is(std::string) = 0;
   void Reset();
+  void ChannelFinished(int channel);
 protected:
 	Event& associated;
 	bool started;
 	bool done;
+  Timer* t;
 };
 
 #endif //C_ACTION
