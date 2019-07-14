@@ -21,6 +21,7 @@
 #include "../include/Camera.h"
 #include "../include/CameraFollower.h"
 #include "../include/Cecilia.h"
+#include "../include/RevertCarang.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -108,7 +109,7 @@ void TestState::LoadAssets(){
 	// Camera::Follow(cecilia);
 	objectArray.emplace_back(cecilia);
 
-	music.Open("assets/audio/fundo.mp3");
+	music.Open("assets/audio/fundo.ogg");
 	music.Play();
 }
 void TestState::Update(float dt){
@@ -137,11 +138,11 @@ void TestState::Update(float dt){
 			TRACE("FINALIZA CARANGUEJO");
 
 
-			emap->AddEvent("Golfinho1",11,9,1,true,7);
+			emap->AddEvent("Golfinho1",11,9,1,true,"assets/img/arenque1.png",13);
 			emap->GetEvent("Golfinho1")->NewAction(new Som(*(emap->GetEvent("Golfinho1")), 2));
-			emap->AddEvent("Golfinho2",12,8,1,true,7);
+			emap->AddEvent("Golfinho2",13,8,1,true,"assets/img/arenque1.png",13);
 			emap->GetEvent("Golfinho2")->NewAction(new Som(*(emap->GetEvent("Golfinho2")), 3));
-			emap->AddEvent("Golfinho3",13,9,1,true,7);
+			emap->AddEvent("Golfinho3",15,9,1,true,"assets/img/arenque1.png",13);
 			emap->GetEvent("Golfinho3")->NewAction(new Som(*(emap->GetEvent("Golfinho3")), 4));
 			TRACE("ADICIONA GOLFINHOS");
 

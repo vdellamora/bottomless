@@ -7,9 +7,16 @@ Dano::Dano(Event& associated, int quantidade) : Action(associated){
 }
 Dano::~Dano(){}
 void Dano::Execute(){
-	started = true;
-	// Event* e = (Event*) associated.GetComponent("Event");
-	Cecilia::player->InfligirDano(quantidade);
-	done = true;
+    Sprite* s = (Sprite*) associated.GetAssociated().GetComponent("Sprite");
+    if (s){
+        started = true;
+        s->SetLoops(false);
+        s->NewSprite("assets/img/caranguejaoGolpe.png",19, 0.1f);
+        done = true;
+        Cecilia::player->InfligirDano(quantidade);
+    } else {
+        started = true;
+        done = true;
+    }
 }
 bool Dano::Is(std::string type){return type == "Dano";}

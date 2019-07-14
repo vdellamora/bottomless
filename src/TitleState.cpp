@@ -75,11 +75,14 @@ void TitleState::Update(float dt){
         switch (i) {
           case 0:
             printf("start");
+                Game::GetInstance().Push(new TestState());
             // push game state;
             break;
           case 1:
             printf("options");
+                
             // present options
+            break;
           case 2:
             printf("Exit\n");
             popRequested = true;

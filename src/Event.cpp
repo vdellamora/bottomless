@@ -196,6 +196,7 @@ bool Event::VaiColidir(int x, int y){
       return true;
     }
   }
+    return false;
 }
 void Event::Render(){
 	if(tileNumber>=0){

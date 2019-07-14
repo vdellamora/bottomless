@@ -3,6 +3,7 @@
 #include "../include/TestState.h"
 #include "../include/SubState.h"
 #include "../include/Cecilia.h"
+#include "../include/TitleState.h"
 
 // a simple channel_finished function
 void channelDone(int channel) {
@@ -15,8 +16,7 @@ int main(int argc, char** argv){
   // set the callback for when a channel stops playing
   Mix_ChannelFinished(channelDone);
 	auto &j = Game::GetInstance();
-	j.Push(new TestState());
+	j.Push(new TitleState());
 	j.Run();
-
 	return 0;
 }

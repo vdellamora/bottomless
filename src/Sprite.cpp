@@ -11,6 +11,7 @@ Sprite::Sprite(GameObject& go) : Component(go) {
 }
 Sprite::Sprite(GameObject& go, std::string file, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(go){
 	// TRACE("Sprite::Sprite");
+    loops = true;
 	NewSprite(file, frameCount, frameTime, secondsToSelfDestruct);
 }
 void Sprite::NewSprite(std::string file, int frameCount, float frameTime, float secondsToSelfDestruct){
@@ -43,11 +44,10 @@ void Sprite::Update(float dt){
 		if(selfDestructCount.Get() > secondsToSelfDestruct) associated.RequestDelete();
 	}
 	if ((timeElapsed += dt) >= frameTime){
-		if(++currentFrame >= frameCount)
+        if(++currentFrame >= frameCount-1){
             if (loops) currentFrame = 0;
             else currentFrame = frameCount-1;
-        
-        
+        }
 		SetFrame(currentFrame);
 		timeElapsed = 0;
 	}

@@ -18,10 +18,9 @@ void RevertCarang::Execute(){
             s->SetLoops(true);
             done = true;
         } else {
-            TRACE("porra");
+            
         }
     } else {
-        
         started = true;
         done = true;
     }

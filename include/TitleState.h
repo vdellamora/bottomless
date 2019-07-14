@@ -35,7 +35,6 @@ private:
   
   std::vector<Rect> buttons;
   GameObject* bg;
-  
   TileSet* ts;
   Music music;
   
